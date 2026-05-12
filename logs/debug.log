@@ -5179,3 +5179,1956 @@ INFO 2025-12-22 05:23:55,763 autoreload 21864 20764 Watching for file changes wi
 INFO 2025-12-22 05:26:55,905 autoreload 21864 20764 C:\Users\elly\Desktop\app\quickfix_backend\registration\views.py changed, reloading.
 INFO 2025-12-22 05:26:58,417 autoreload 11044 15444 Watching for file changes with StatReloader
 INFO 2025-12-22 05:29:47,903 autoreload 11044 15444 C:\Users\elly\Desktop\app\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+ERROR 2026-01-01 22:52:03,629 views Failed to create booking: Garage matching query does not exist.
+ERROR 2026-01-01 22:55:30,402 views Failed to create booking: Garage matching query does not exist.
+ERROR 2026-01-01 23:02:33,205 views Failed to create booking: Garage matching query does not exist.
+ERROR 2026-01-01 23:02:56,937 views Failed to create booking: Garage matching query does not exist.
+ERROR 2026-01-01 23:09:50,532 views Failed to create booking: Garage matching query does not exist.
+ERROR 2026-01-01 23:11:04,844 views Failed to create booking: Garage matching query does not exist.
+INFO 2026-01-01 23:15:29,749 sms Console SMS sent to +1255742578691
+INFO 2026-01-01 23:22:59,363 sms Console SMS sent to +255742578691
+INFO 2026-01-01 23:29:32,215 sms Console SMS sent to +255742578691
+INFO 2026-01-01 23:51:48,259 sms Console SMS sent to +255742578691
+INFO 2026-01-02 00:00:46,713 sms Console SMS sent to +255742578691
+INFO 2026-01-03 18:56:35,370 sms Console SMS sent to +255743578619
+INFO 2026-01-03 21:17:01,793 sms Console SMS sent to +255742578691
+ERROR 2026-01-03 21:17:01,819 views Email error: 'Booking' object has no attribute 'is_emergency'
+INFO 2026-01-03 21:23:33,389 sms Console SMS sent to +255742578691
+ERROR 2026-01-03 21:23:33,414 views Email error: 'Booking' object has no attribute 'is_emergency'
+INFO 2026-01-03 21:26:15,664 sms Console SMS sent to +255742578691
+ERROR 2026-01-03 21:26:15,696 views Email error: 'Booking' object has no attribute 'is_emergency'
+INFO 2026-01-03 22:05:37,420 views Sending booking email to: mwananjelaelisha36@gmail.com
+INFO 2026-01-03 22:05:39,039 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-03 22:05:39,065 views Updated booking #BK-20260103-MY8BH with email sent note
+INFO 2026-01-03 22:11:37,586 views Sending booking email to: mwananjelaelisha36@gmail.com
+INFO 2026-01-03 22:11:39,045 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-03 22:11:39,070 views Updated booking #BK-20260103-M0J84 with email sent note
+INFO 2026-01-04 09:59:31,215 views Sending booking email to: mwananjelaelisha36@gmail.com
+INFO 2026-01-04 09:59:32,644 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-04 09:59:32,673 views Updated booking #BK-20260104-L0BUE with email sent note
+WARNING 2026-01-06 05:47:39,313 views No phone number for user in booking #BK-20260106-8C59P
+INFO 2026-01-06 05:47:39,315 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+ERROR 2026-01-06 05:47:39,315 views Error sending booking email: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 1158, in send_booking_email
+    html_content = self._generate_booking_email_content(booking)
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 1268, in _generate_booking_email_content
+    customer_name = booking.user.get_full_name() if booking.user else "Customer"
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'get_username'?
+WARNING 2026-01-06 05:49:26,168 views No phone number for user in booking #BK-20260106-VXB4Q
+INFO 2026-01-06 05:49:26,169 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+ERROR 2026-01-06 05:49:26,169 views Error sending booking email: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 1158, in send_booking_email
+    html_content = self._generate_booking_email_content(booking)
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 1268, in _generate_booking_email_content
+    customer_name = booking.user.get_full_name() if booking.user else "Customer"
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'get_username'?
+WARNING 2026-01-06 06:02:06,750 views No phone number for user in booking #BK-20260106-11UHC
+INFO 2026-01-06 06:02:06,750 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+ERROR 2026-01-06 06:02:06,751 views Error sending booking email: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 1158, in send_booking_email
+    html_content = self._generate_booking_email_content(booking)
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 1268, in _generate_booking_email_content
+    customer_name = booking.user.get_full_name() if booking.user else "Customer"
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'get_username'?
+WARNING 2026-01-06 06:14:47,845 views No phone number for user in booking #BK-20260106-JHVGG
+INFO 2026-01-06 06:14:47,845 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+INFO 2026-01-06 06:14:47,845 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-06 06:14:47,845 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-06 06:14:47,845 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-06 06:14:47,846 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-06 06:14:47,846 views EMAIL_PORT: 587
+INFO 2026-01-06 06:14:47,846 views EMAIL_USE_TLS: True
+INFO 2026-01-06 06:14:47,846 views EMAIL_USE_SSL: False
+INFO 2026-01-06 06:14:47,846 views =========================
+INFO 2026-01-06 06:14:49,761 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-06 06:14:49,781 views Updated booking #BK-20260106-JHVGG with email sent note
+WARNING 2026-01-06 06:19:59,933 views No phone number for user in booking #BK-20260106-LJ41C
+INFO 2026-01-06 06:19:59,934 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+INFO 2026-01-06 06:19:59,935 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-06 06:19:59,935 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-06 06:19:59,935 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-06 06:19:59,935 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-06 06:19:59,935 views EMAIL_PORT: 587
+INFO 2026-01-06 06:19:59,935 views EMAIL_USE_TLS: True
+INFO 2026-01-06 06:19:59,935 views EMAIL_USE_SSL: False
+INFO 2026-01-06 06:19:59,935 views =========================
+INFO 2026-01-06 06:20:00,945 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-06 06:20:00,968 views Updated booking #BK-20260106-LJ41C with email sent note
+ERROR 2026-01-06 06:52:43,769 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 1100, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-06 06:52:43,803 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+INFO 2026-01-06 06:52:43,804 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-06 06:52:43,804 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-06 06:52:43,804 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-06 06:52:43,804 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-06 06:52:43,804 views EMAIL_PORT: 587
+INFO 2026-01-06 06:52:43,804 views EMAIL_USE_TLS: True
+INFO 2026-01-06 06:52:43,804 views EMAIL_USE_SSL: False
+INFO 2026-01-06 06:52:43,804 views =========================
+INFO 2026-01-06 06:52:45,421 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-06 06:52:45,442 views Updated booking #BK-20260106-7MH1Q with email sent note
+WARNING 2026-01-06 07:08:31,318 views No phone number for user in booking #BK-20260106-CWBWE
+INFO 2026-01-06 07:08:31,319 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+INFO 2026-01-06 07:08:31,319 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-06 07:08:31,319 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-06 07:08:31,319 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-06 07:08:31,319 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-06 07:08:31,319 views EMAIL_PORT: 587
+INFO 2026-01-06 07:08:31,319 views EMAIL_USE_TLS: True
+INFO 2026-01-06 07:08:31,319 views EMAIL_USE_SSL: False
+INFO 2026-01-06 07:08:31,319 views =========================
+INFO 2026-01-06 07:08:32,790 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-06 07:08:32,808 views Updated booking #BK-20260106-CWBWE with email sent note
+WARNING 2026-01-06 07:16:13,554 views Phone not verified for booking #BK-20260106-M9FTR
+INFO 2026-01-06 07:16:13,555 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+INFO 2026-01-06 07:16:13,555 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-06 07:16:13,555 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-06 07:16:13,555 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-06 07:16:13,555 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-06 07:16:13,555 views EMAIL_PORT: 587
+INFO 2026-01-06 07:16:13,555 views EMAIL_USE_TLS: True
+INFO 2026-01-06 07:16:13,555 views EMAIL_USE_SSL: False
+INFO 2026-01-06 07:16:13,555 views =========================
+INFO 2026-01-06 07:16:14,414 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-06 07:16:14,434 views Updated booking #BK-20260106-M9FTR with email sent note
+INFO 2026-01-07 04:42:48,120 views Email verified for user: mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:10:17,219 views Attempting to send OTP email to: mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:10:17,220 views OTP Code: 700021
+INFO 2026-01-07 05:10:18,183 views ✅ OTP email sent successfully to mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:10:18,183 views 📧 Email backend used: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-07 05:11:16,511 views ✅ Email verified for user: mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:11:16,539 views ✅ OTP verification successful for user 678ab489-5d52-495c-a7af-3108008eae88, purpose: email_verification
+INFO 2026-01-07 05:21:16,078 views Attempting to send OTP email to: mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:21:16,080 views OTP Code: 833087
+INFO 2026-01-07 05:21:17,041 views ✅ OTP email sent successfully to mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:21:17,041 views 📧 Email backend used: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-07 05:21:40,597 views ✅ Email verified for user: mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:21:40,618 views ✅ OTP verification successful for user 39c9b56c-9a42-4040-a873-663afdc53a86, purpose: email_verification
+INFO 2026-01-07 05:36:11,743 views Attempting to send OTP email to: mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:36:11,744 views OTP Code: 562732
+INFO 2026-01-07 05:36:12,655 views ✅ OTP email sent successfully to mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:36:12,655 views 📧 Email backend used: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-07 05:36:31,671 views ✅ Email verified for user: mwananjelaelisha36@gmail.com
+INFO 2026-01-07 05:36:31,694 views ✅ OTP verification successful for user bcbcfc7a-9575-4d27-8f8e-e03caf49164c, purpose: email_verification
+ERROR 2026-01-07 12:47:53,182 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2550, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-07 12:47:53,243 views Sending booking email to garage: qfix910@gmail.com
+INFO 2026-01-07 12:47:53,243 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-07 12:47:53,243 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-07 12:47:53,243 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-07 12:47:53,243 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-07 12:47:53,243 views EMAIL_PORT: 587
+INFO 2026-01-07 12:47:53,243 views EMAIL_USE_TLS: True
+INFO 2026-01-07 12:47:53,244 views EMAIL_USE_SSL: False
+INFO 2026-01-07 12:47:53,244 views =========================
+INFO 2026-01-07 12:47:54,888 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+INFO 2026-01-07 12:47:54,909 views Updated booking #BK-20260107-QLD0V with email sent note
+INFO 2026-01-07 19:34:27,460 views ✅ Email OTP sent to mwananjelaelisha36@gmail.com
+INFO 2026-01-07 19:35:10,300 views ✅ Email verified for user: mwananjelaelisha36@gmail.com
+INFO 2026-01-07 19:35:10,354 views ✅ OTP verification successful for user 15869d74-12e4-40e0-b4c8-d6fd8968c3b0, purpose: email_verification
+ERROR 2026-01-08 01:34:02,287 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2471, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-08 01:34:02,332 views Sending booking email to garage: qfix910@gmail.com
+INFO 2026-01-08 01:34:02,332 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-08 01:34:02,332 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-08 01:34:02,332 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-08 01:34:02,332 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-08 01:34:02,332 views EMAIL_PORT: 587
+INFO 2026-01-08 01:34:02,333 views EMAIL_USE_TLS: True
+INFO 2026-01-08 01:34:02,334 views EMAIL_USE_SSL: False
+INFO 2026-01-08 01:34:02,334 views =========================
+INFO 2026-01-08 01:34:03,217 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+INFO 2026-01-08 01:34:03,241 views Updated booking #BK-20260108-1QJEV with email sent note
+INFO 2026-01-08 01:34:40,808 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-08 01:34:40,809 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-11 10:51:42,227 views ✅ Email OTP sent to michaelshadrackjr@gmail.com
+INFO 2026-01-11 10:52:33,617 views ✅ Email verified for user: michaelshadrackjr@gmail.com
+INFO 2026-01-11 10:52:33,642 views ✅ OTP verification successful for user 0db57376-57af-482f-83a3-6835627a6bb1, purpose: email_verification
+WARNING 2026-01-11 11:18:26,735 views Phone not verified for booking #BK-20260111-3AA3R
+INFO 2026-01-11 11:18:26,736 views Sending booking email to garage: qfix910@gmail.com
+INFO 2026-01-11 11:18:26,736 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-11 11:18:26,736 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-11 11:18:26,736 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-11 11:18:26,737 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-11 11:18:26,737 views EMAIL_PORT: 587
+INFO 2026-01-11 11:18:26,737 views EMAIL_USE_TLS: True
+INFO 2026-01-11 11:18:26,737 views EMAIL_USE_SSL: False
+INFO 2026-01-11 11:18:26,737 views =========================
+WARNING 2026-01-11 11:18:26,752 views Method 1 failed: [Errno 101] Network is unreachable
+ERROR 2026-01-11 11:18:26,754 views Method 2 also failed: [Errno 101] Network is unreachable
+INFO 2026-01-19 22:30:51,650 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-20 05:38:35,525 views Failed to create booking: NOT NULL constraint failed: users_booking.price
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: users_booking.price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2389, in create
+    booking = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/registration/serializers.py", line 390, in create
+    return Booking.objects.create(**validated_data)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/models.py", line 415, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 874, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 966, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1167, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1218, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: NOT NULL constraint failed: users_booking.price
+INFO 2026-01-20 20:37:04,199 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-20 20:37:04,205 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-20 22:39:15,418 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-20 22:39:15,420 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-20 22:40:17,949 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-20 22:40:17,949 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-20 22:40:35,341 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-20 22:40:35,342 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+ERROR 2026-01-21 06:18:33,627 views Failed to create booking: NOT NULL constraint failed: users_booking.price
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: users_booking.price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2389, in create
+    booking = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/registration/serializers.py", line 390, in create
+    return Booking.objects.create(**validated_data)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/models.py", line 415, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 874, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 966, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1167, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1218, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: NOT NULL constraint failed: users_booking.price
+ERROR 2026-01-21 06:26:42,708 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2471, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-21 06:26:42,734 views Sending booking email to garage: qfix910@gmail.com
+INFO 2026-01-21 06:26:42,734 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-21 06:26:42,734 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-21 06:26:42,734 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-21 06:26:42,735 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-21 06:26:42,735 views EMAIL_PORT: 587
+INFO 2026-01-21 06:26:42,735 views EMAIL_USE_TLS: True
+INFO 2026-01-21 06:26:42,735 views EMAIL_USE_SSL: False
+INFO 2026-01-21 06:26:42,735 views =========================
+INFO 2026-01-21 06:26:44,298 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+INFO 2026-01-21 06:26:44,322 views Updated booking #BK-20260121-1661Q with email sent note
+ERROR 2026-01-21 06:53:36,334 views Failed to create booking: NOT NULL constraint failed: users_booking.price
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: users_booking.price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2389, in create
+    booking = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/registration/serializers.py", line 390, in create
+    return Booking.objects.create(**validated_data)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/models.py", line 415, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 874, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 966, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1167, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1218, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: NOT NULL constraint failed: users_booking.price
+ERROR 2026-01-21 07:05:26,589 views Failed to create booking: NOT NULL constraint failed: users_booking.price
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: users_booking.price
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2389, in create
+    booking = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/registration/serializers.py", line 390, in create
+    return Booking.objects.create(**validated_data)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/models.py", line 415, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 874, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 966, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1167, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, insert_fields, returning_fields, raw
+    )
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1218, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1925, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: NOT NULL constraint failed: users_booking.price
+ERROR 2026-01-21 07:16:10,139 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2471, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-21 07:16:10,164 views Sending booking email to garage: qfix910@gmail.com
+INFO 2026-01-21 07:16:10,164 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-21 07:16:10,164 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-21 07:16:10,164 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-21 07:16:10,164 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-21 07:16:10,164 views EMAIL_PORT: 587
+INFO 2026-01-21 07:16:10,164 views EMAIL_USE_TLS: True
+INFO 2026-01-21 07:16:10,164 views EMAIL_USE_SSL: False
+INFO 2026-01-21 07:16:10,164 views =========================
+INFO 2026-01-21 07:16:11,103 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+INFO 2026-01-21 07:16:11,132 views Updated booking #BK-20260121-ES0IS with email sent note
+INFO 2026-01-21 07:17:31,605 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-21 07:17:31,606 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-21 07:17:50,620 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-21 07:17:50,620 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-21 07:19:15,202 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-21 07:19:15,203 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+ERROR 2026-01-21 09:05:51,744 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2471, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-21 09:05:51,784 views Sending booking email to garage: qfix910@gmail.com
+INFO 2026-01-21 09:05:51,784 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-21 09:05:51,784 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-21 09:05:51,784 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-21 09:05:51,784 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-21 09:05:51,784 views EMAIL_PORT: 587
+INFO 2026-01-21 09:05:51,785 views EMAIL_USE_TLS: True
+INFO 2026-01-21 09:05:51,785 views EMAIL_USE_SSL: False
+INFO 2026-01-21 09:05:51,785 views =========================
+INFO 2026-01-21 09:05:53,041 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+INFO 2026-01-21 09:05:53,065 views Updated booking #BK-20260121-Q34MC with email sent note
+INFO 2026-01-21 09:08:18,376 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-21 09:08:18,377 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-21 09:08:57,271 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-21 09:08:57,271 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-21 09:09:31,003 views ✅ Email sent via EmailMultiAlternatives to qfix910@gmail.com
+ERROR 2026-01-21 09:09:31,003 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+ERROR 2026-01-22 23:37:22,078 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2563, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-22 23:37:22,138 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+INFO 2026-01-22 23:37:22,138 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-22 23:37:22,138 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-22 23:37:22,139 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-22 23:37:22,139 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-22 23:37:22,139 views EMAIL_PORT: 587
+INFO 2026-01-22 23:37:22,139 views EMAIL_USE_TLS: True
+INFO 2026-01-22 23:37:22,139 views EMAIL_USE_SSL: False
+INFO 2026-01-22 23:37:22,139 views =========================
+INFO 2026-01-22 23:37:23,610 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-22 23:37:23,632 views Updated booking #BK-20260122-AFD64 with email sent note
+INFO 2026-01-22 23:40:31,736 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-22 23:40:31,736 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-22 23:40:45,666 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-22 23:40:45,666 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-22 23:40:55,995 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-22 23:40:55,995 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-25 23:57:19,420 views Login attempt for identifier: 0742578691
+INFO 2026-01-25 23:57:19,420 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-25 23:57:19,438 views Phone search for 0742578691: Found
+INFO 2026-01-25 23:57:20,675 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-25 23:57:20,734 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-25 23:57:20,734 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 00:04:07,268 views Login attempt for identifier: 0742578691
+INFO 2026-01-26 00:04:07,269 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-26 00:04:07,288 views Phone search for 0742578691: Found
+INFO 2026-01-26 00:04:08,706 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 00:04:08,743 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 00:04:08,743 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 00:16:39,938 views Login attempt for identifier: 0742578691
+INFO 2026-01-26 00:16:39,939 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-26 00:16:39,953 views Phone search for 0742578691: Found
+INFO 2026-01-26 00:16:41,235 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 00:16:41,258 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 00:16:41,259 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 01:10:45,768 views Login attempt for identifier: 0769691384
+INFO 2026-01-26 01:10:45,769 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-26 01:10:45,778 views Phone search for 0769691384: Found
+INFO 2026-01-26 01:10:46,855 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 01:10:46,881 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 01:10:46,881 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 02:24:57,757 views Login attempt for identifier: 0622208691
+INFO 2026-01-26 02:24:57,758 views Phone normalization: 0622208691 -> 0622208691
+INFO 2026-01-26 02:24:57,767 views Phone search for 0622208691: Found
+INFO 2026-01-26 02:24:58,675 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 02:24:58,698 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 02:24:58,698 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 05:09:26,897 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-26 05:09:26,910 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-26 05:09:28,181 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 05:09:28,209 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 05:09:28,210 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 05:19:22,753 views Login attempt for identifier: 0769691384
+INFO 2026-01-26 05:19:22,755 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-26 05:19:22,772 views Phone search for 0769691384: Found
+WARNING 2026-01-26 05:19:24,510 views Invalid password for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 05:19:53,721 views Login attempt for identifier: 0742578691
+INFO 2026-01-26 05:19:53,721 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-26 05:19:53,733 views Phone search for 0742578691: Not found
+WARNING 2026-01-26 05:19:53,733 views No user found for phone: 0742578691
+INFO 2026-01-26 05:21:05,922 views Login attempt for identifier: 0742578691
+INFO 2026-01-26 05:21:05,922 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-26 05:21:05,929 views Phone search for 0742578691: Found
+INFO 2026-01-26 05:21:06,817 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 05:21:06,846 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 05:21:06,846 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 05:22:23,057 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-26 05:22:23,074 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-26 05:22:24,250 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 05:22:24,280 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 05:22:24,280 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 21:58:07,512 views Login attempt for identifier: 0742578491
+INFO 2026-01-26 21:58:07,515 views Phone normalization: 0742578491 -> 0742578491
+INFO 2026-01-26 21:58:07,533 views Phone search for 0742578491: Not found
+WARNING 2026-01-26 21:58:07,533 views No user found for phone: 0742578491
+INFO 2026-01-26 21:58:37,937 views Login attempt for identifier: 0742578491
+INFO 2026-01-26 21:58:37,937 views Phone normalization: 0742578491 -> 0742578491
+INFO 2026-01-26 21:58:37,949 views Phone search for 0742578491: Not found
+WARNING 2026-01-26 21:58:37,949 views No user found for phone: 0742578491
+INFO 2026-01-26 21:59:06,991 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-26 21:59:07,001 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-26 21:59:08,139 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 21:59:08,176 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 21:59:08,176 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 22:05:45,299 views Login attempt for identifier: 0769691384
+INFO 2026-01-26 22:05:45,300 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-26 22:05:45,309 views Phone search for 0769691384: Found
+INFO 2026-01-26 22:05:46,223 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 22:05:46,251 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 22:05:46,251 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 22:08:16,489 views Login attempt for identifier: 0742578691
+INFO 2026-01-26 22:08:16,489 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-26 22:08:16,500 views Phone search for 0742578691: Found
+INFO 2026-01-26 22:08:18,268 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 22:08:18,299 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 22:08:18,300 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 22:09:20,494 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-26 22:09:20,505 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-26 22:09:21,741 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 22:09:21,767 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 22:09:21,767 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-26 22:11:07,787 views Login attempt for identifier: 0742578691
+INFO 2026-01-26 22:11:07,788 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-26 22:11:07,810 views Phone search for 0742578691: Found
+WARNING 2026-01-26 22:11:09,723 views Invalid password for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 22:11:25,983 views Login attempt for identifier: 0742578691
+INFO 2026-01-26 22:11:25,983 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-26 22:11:25,992 views Phone search for 0742578691: Found
+INFO 2026-01-26 22:11:27,109 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 22:11:27,135 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-26 22:11:27,136 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+ERROR 2026-01-26 23:19:18,877 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2931, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-26 23:19:18,917 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+INFO 2026-01-26 23:19:18,917 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-26 23:19:18,917 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-26 23:19:18,919 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-26 23:19:18,919 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-26 23:19:18,919 views EMAIL_PORT: 587
+INFO 2026-01-26 23:19:18,919 views EMAIL_USE_TLS: True
+INFO 2026-01-26 23:19:18,919 views EMAIL_USE_SSL: False
+INFO 2026-01-26 23:19:18,920 views =========================
+WARNING 2026-01-26 23:19:18,928 views Method 1 failed: [Errno 101] Network is unreachable
+ERROR 2026-01-26 23:19:18,930 views Method 2 also failed: [Errno 101] Network is unreachable
+WARNING 2026-01-26 23:26:48,942 views Method 1 failed: [Errno 101] Network is unreachable
+ERROR 2026-01-26 23:26:48,943 views Method 2 also failed: [Errno 101] Network is unreachable
+ERROR 2026-01-26 23:26:48,943 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+WARNING 2026-01-26 23:26:57,044 views Method 1 failed: [Errno 101] Network is unreachable
+ERROR 2026-01-26 23:26:57,045 views Method 2 also failed: [Errno 101] Network is unreachable
+ERROR 2026-01-26 23:26:57,045 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+WARNING 2026-01-26 23:27:03,092 views Method 1 failed: [Errno 101] Network is unreachable
+ERROR 2026-01-26 23:27:03,093 views Method 2 also failed: [Errno 101] Network is unreachable
+ERROR 2026-01-26 23:27:03,094 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-27 01:45:27,778 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 01:45:27,790 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 01:45:27,876 views Phone search for 0742578691: Found
+INFO 2026-01-27 01:45:29,029 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 01:45:29,075 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 01:45:29,076 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 02:36:25,010 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-27 02:36:25,011 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-27 02:36:37,022 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-27 02:36:37,022 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-27 02:36:47,912 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-27 02:36:47,912 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-27 03:10:16,233 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 03:10:16,234 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 03:10:16,243 views Phone search for 0742578691: Found
+INFO 2026-01-27 03:10:17,594 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 03:10:17,629 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 03:10:17,629 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+ERROR 2026-01-27 03:17:40,813 views Error sending booking SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/registration/views.py", line 2931, in send_booking_sms_confirmation
+    sms_sent = sms_service.send_sms(
+        phone_number=booking.user.phone,
+        message=message,
+        purpose='booking_confirmation'
+    )
+TypeError: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-27 03:17:40,849 views Sending booking email to garage: mwananjelaelisha36@gmail.com
+INFO 2026-01-27 03:17:40,849 views === EMAIL CONFIG DEBUG ===
+INFO 2026-01-27 03:17:40,849 views EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-01-27 03:17:40,849 views DEFAULT_FROM_EMAIL: qfix910@gmail.com
+INFO 2026-01-27 03:17:40,849 views EMAIL_HOST: smtp.gmail.com
+INFO 2026-01-27 03:17:40,849 views EMAIL_PORT: 587
+INFO 2026-01-27 03:17:40,849 views EMAIL_USE_TLS: True
+INFO 2026-01-27 03:17:40,849 views EMAIL_USE_SSL: False
+INFO 2026-01-27 03:17:40,849 views =========================
+INFO 2026-01-27 03:17:42,757 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+INFO 2026-01-27 03:17:42,780 views Updated booking #BK-20260127-W441J with email sent note
+INFO 2026-01-27 04:35:29,646 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 04:35:29,654 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 04:35:29,726 views Phone search for 0742578691: Found
+INFO 2026-01-27 04:35:30,826 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 04:35:30,869 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 04:35:30,870 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 04:44:52,765 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-27 04:44:52,766 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-27 04:44:58,958 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-27 04:44:58,958 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-27 04:45:05,718 views ✅ Email sent via EmailMultiAlternatives to mwananjelaelisha36@gmail.com
+ERROR 2026-01-27 04:45:05,718 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+INFO 2026-01-27 06:24:38,187 views Login attempt for identifier: 0711545317
+INFO 2026-01-27 06:24:38,189 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-27 06:24:38,241 views Phone search for 0711545317: Not found
+WARNING 2026-01-27 06:24:38,242 views No user found for phone: 0711545317
+INFO 2026-01-27 06:24:52,732 views Login attempt for identifier: 0711545317
+INFO 2026-01-27 06:24:52,733 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-27 06:24:52,756 views Phone search for 0711545317: Not found
+WARNING 2026-01-27 06:24:52,757 views No user found for phone: 0711545317
+INFO 2026-01-27 06:26:29,603 views Login attempt for identifier: 0711545317
+INFO 2026-01-27 06:26:29,603 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-27 06:26:29,636 views Phone search for 0711545317: Not found
+WARNING 2026-01-27 06:26:29,636 views No user found for phone: 0711545317
+INFO 2026-01-27 06:28:03,481 views Login attempt for identifier: 0711545317
+INFO 2026-01-27 06:28:03,482 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-27 06:28:03,502 views Phone search for 0711545317: Found
+INFO 2026-01-27 06:28:05,197 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 06:28:05,226 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 06:28:05,227 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 09:35:44,011 views Login attempt for identifier: 0764086834
+INFO 2026-01-27 09:35:44,022 views Phone normalization: 0764086834 -> 0764086834
+INFO 2026-01-27 09:35:44,044 views Phone search for 0764086834: Found
+INFO 2026-01-27 09:35:45,742 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 09:35:45,800 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 09:35:45,801 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-27 16:29:10,568 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:29:10,584 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:29:10,767 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:29:10,768 views No user found for phone: 0742578691
+INFO 2026-01-27 16:29:30,373 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:29:30,373 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:29:30,393 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:29:30,394 views No user found for phone: 0742578691
+INFO 2026-01-27 16:30:02,096 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:30:02,097 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:30:02,127 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:30:02,129 views No user found for phone: 0742578691
+INFO 2026-01-27 16:32:33,344 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:32:33,344 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:32:33,360 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:32:33,360 views No user found for phone: 0742578691
+INFO 2026-01-27 16:43:04,151 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:43:04,153 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:43:04,174 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:43:04,175 views No user found for phone: 0742578691
+INFO 2026-01-27 16:44:20,065 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:44:20,065 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:44:20,110 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:44:20,110 views No user found for phone: 0742578691
+INFO 2026-01-27 16:45:06,078 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:45:06,078 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:45:06,095 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:45:06,095 views No user found for phone: 0742578691
+INFO 2026-01-27 16:52:08,844 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:52:08,845 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:52:08,862 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:52:08,862 views No user found for phone: 0742578691
+INFO 2026-01-27 16:52:19,241 views Login attempt for identifier: 0742578691
+INFO 2026-01-27 16:52:19,241 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-27 16:52:19,259 views Phone search for 0742578691: Not found
+WARNING 2026-01-27 16:52:19,259 views No user found for phone: 0742578691
+INFO 2026-01-27 17:40:48,330 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-27 17:40:48,346 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-27 17:40:49,905 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-27 17:40:49,953 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-27 17:40:49,956 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-27 17:42:39,544 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-27 17:42:39,557 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-27 17:42:41,068 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-27 17:42:41,099 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-27 17:42:41,099 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-28 07:37:03,618 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 07:37:03,633 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 07:37:03,794 views Phone search for 0711545317: Not found
+WARNING 2026-01-28 07:37:03,795 views No user found for phone: 0711545317
+INFO 2026-01-28 07:37:13,242 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 07:37:13,242 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 07:37:13,266 views Phone search for 0711545317: Not found
+WARNING 2026-01-28 07:37:13,266 views No user found for phone: 0711545317
+INFO 2026-01-28 07:37:21,658 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 07:37:21,658 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 07:37:21,680 views Phone search for 0711545317: Not found
+WARNING 2026-01-28 07:37:21,681 views No user found for phone: 0711545317
+INFO 2026-01-28 07:38:59,233 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 07:38:59,234 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 07:38:59,255 views Phone search for 0711545317: Not found
+WARNING 2026-01-28 07:38:59,255 views No user found for phone: 0711545317
+INFO 2026-01-28 07:39:23,414 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 07:39:23,414 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 07:39:23,461 views Phone search for 0711545317: Not found
+WARNING 2026-01-28 07:39:23,462 views No user found for phone: 0711545317
+INFO 2026-01-28 07:39:30,007 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 07:39:30,008 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 07:39:30,080 views Phone search for 0711545317: Not found
+WARNING 2026-01-28 07:39:30,082 views No user found for phone: 0711545317
+INFO 2026-01-28 17:43:34,801 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 17:43:34,801 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 17:43:34,825 views Phone search for 0711545317: Not found
+WARNING 2026-01-28 17:43:34,825 views No user found for phone: 0711545317
+INFO 2026-01-28 17:43:35,393 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 17:43:35,393 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 17:43:35,406 views Phone search for 0711545317: Not found
+WARNING 2026-01-28 17:43:35,406 views No user found for phone: 0711545317
+INFO 2026-01-28 17:44:33,810 views Login attempt for identifier: 0711545317
+INFO 2026-01-28 17:44:33,811 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-01-28 17:44:33,818 views Phone search for 0711545317: Found
+INFO 2026-01-28 17:44:34,824 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-28 17:44:34,878 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-28 17:44:34,878 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-01-29 07:30:59,387 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-29 07:30:59,530 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-29 07:31:00,557 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 07:31:00,610 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 07:31:00,611 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 09:01:07,726 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-29 09:01:07,737 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-29 09:01:09,519 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 09:01:09,549 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 09:01:09,550 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 16:45:22,390 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 16:45:22,391 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 16:45:22,425 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 16:45:22,425 views No user found for phone: 0742578691
+INFO 2026-01-29 16:45:38,213 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 16:45:38,213 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 16:45:38,226 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 16:45:38,226 views No user found for phone: 0742578691
+INFO 2026-01-29 16:46:00,075 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 16:46:00,075 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 16:46:00,112 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 16:46:00,112 views No user found for phone: 0742578691
+INFO 2026-01-29 16:48:29,369 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 16:48:29,370 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 16:48:29,403 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 16:48:29,403 views No user found for phone: 0742578691
+INFO 2026-01-29 16:48:47,414 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 16:48:47,414 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 16:48:47,432 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 16:48:47,433 views No user found for phone: 0742578691
+INFO 2026-01-29 16:58:25,146 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 16:58:25,147 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 16:58:25,171 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 16:58:25,171 views No user found for phone: 0742578691
+INFO 2026-01-29 16:58:35,658 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 16:58:35,659 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 16:58:35,680 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 16:58:35,681 views No user found for phone: 0742578691
+INFO 2026-01-29 17:17:45,016 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 17:17:45,017 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 17:17:45,034 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 17:17:45,035 views No user found for phone: 0742578691
+INFO 2026-01-29 17:18:04,513 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 17:18:04,513 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 17:18:04,549 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 17:18:04,549 views No user found for phone: 0742578691
+INFO 2026-01-29 17:33:16,424 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-29 17:33:16,437 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-29 17:33:17,650 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:33:17,689 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:33:17,691 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:33:34,905 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-29 17:33:34,925 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-29 17:33:37,137 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:33:37,171 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:33:37,172 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:34:16,268 views Login attempt for identifier: 0742578691
+INFO 2026-01-29 17:34:16,268 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-01-29 17:34:16,316 views Phone search for 0742578691: Not found
+WARNING 2026-01-29 17:34:16,317 views No user found for phone: 0742578691
+INFO 2026-01-29 17:34:34,125 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-01-29 17:34:34,133 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-01-29 17:34:36,023 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:34:36,046 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:34:36,046 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:35:15,697 views Login attempt for identifier: 0769691384
+INFO 2026-01-29 17:35:15,697 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-29 17:35:15,706 views Phone search for 0769691384: Found
+INFO 2026-01-29 17:35:16,992 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:35:17,015 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:35:17,015 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:37:41,709 views Login attempt for identifier: 0769691384
+INFO 2026-01-29 17:37:41,709 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-29 17:37:41,721 views Phone search for 0769691384: Found
+INFO 2026-01-29 17:37:43,398 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:37:43,424 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-29 17:37:43,424 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:30:01,429 views Login attempt for identifier: 0769691384
+INFO 2026-01-30 04:30:01,431 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-30 04:30:01,452 views Phone search for 0769691384: Found
+INFO 2026-01-30 04:30:04,692 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:30:04,873 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:30:04,873 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:33:01,112 views Login attempt for identifier: 0769691384
+INFO 2026-01-30 04:33:01,113 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-30 04:33:01,126 views Phone search for 0769691384: Found
+INFO 2026-01-30 04:33:03,055 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:33:03,089 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:33:03,090 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:42:22,427 views Login attempt for identifier: 0769691384
+INFO 2026-01-30 04:42:22,427 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-30 04:42:22,437 views Phone search for 0769691384: Found
+INFO 2026-01-30 04:42:23,618 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:42:23,644 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 04:42:23,644 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+ERROR 2026-01-30 05:11:18,783 views Failed to create service request: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cf12df0>": "CustomerRequest.customer" must be a "CustomUser" instance.
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 129, in create
+    customer_request = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/serializers.py", line 73, in create
+    return super().create(validated_data)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 991, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 566, in __init__
+    _setattr(self, field.name, rel_obj)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/fields/related_descriptors.py", line 287, in __set__
+    raise ValueError(
+    ...<7 lines>...
+    )
+ValueError: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cf12df0>": "CustomerRequest.customer" must be a "CustomUser" instance.
+ERROR 2026-01-30 05:27:29,088 views Failed to create service request: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cebbd90>": "CustomerRequest.customer" must be a "CustomUser" instance.
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 129, in create
+    customer_request = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/serializers.py", line 73, in create
+    return super().create(validated_data)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 991, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 566, in __init__
+    _setattr(self, field.name, rel_obj)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/fields/related_descriptors.py", line 287, in __set__
+    raise ValueError(
+    ...<7 lines>...
+    )
+ValueError: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cebbd90>": "CustomerRequest.customer" must be a "CustomUser" instance.
+ERROR 2026-01-30 06:10:36,033 views Failed to create service request: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cea3ed0>": "CustomerRequest.customer" must be a "CustomUser" instance.
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 129, in create
+    customer_request = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/serializers.py", line 73, in create
+    return super().create(validated_data)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 991, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 566, in __init__
+    _setattr(self, field.name, rel_obj)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/fields/related_descriptors.py", line 287, in __set__
+    raise ValueError(
+    ...<7 lines>...
+    )
+ValueError: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cea3ed0>": "CustomerRequest.customer" must be a "CustomUser" instance.
+ERROR 2026-01-30 06:10:52,331 views Failed to create service request: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cdedf40>": "CustomerRequest.customer" must be a "CustomUser" instance.
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 129, in create
+    customer_request = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/serializers.py", line 73, in create
+    return super().create(validated_data)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 991, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 566, in __init__
+    _setattr(self, field.name, rel_obj)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/fields/related_descriptors.py", line 287, in __set__
+    raise ValueError(
+    ...<7 lines>...
+    )
+ValueError: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cdedf40>": "CustomerRequest.customer" must be a "CustomUser" instance.
+ERROR 2026-01-30 06:11:35,433 views Failed to create service request: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cdee440>": "CustomerRequest.customer" must be a "CustomUser" instance.
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 129, in create
+    customer_request = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/serializers.py", line 73, in create
+    return super().create(validated_data)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 991, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 566, in __init__
+    _setattr(self, field.name, rel_obj)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/fields/related_descriptors.py", line 287, in __set__
+    raise ValueError(
+    ...<7 lines>...
+    )
+ValueError: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cdee440>": "CustomerRequest.customer" must be a "CustomUser" instance.
+ERROR 2026-01-30 06:11:54,602 views Failed to create service request: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cf12710>": "CustomerRequest.customer" must be a "CustomUser" instance.
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 129, in create
+    customer_request = serializer.save()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/quickfix_backend/users/serializers.py", line 73, in create
+    return super().create(validated_data)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 991, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/base.py", line 566, in __init__
+    _setattr(self, field.name, rel_obj)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/fields/related_descriptors.py", line 287, in __set__
+    raise ValueError(
+    ...<7 lines>...
+    )
+ValueError: Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x77df0cf12710>": "CustomerRequest.customer" must be a "CustomUser" instance.
+INFO 2026-01-30 06:57:32,790 views Creating request for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 06:57:32,790 views User authenticated: True
+INFO 2026-01-30 08:08:23,440 views Creating request for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-30 08:08:23,441 views User authenticated: True
+WARNING 2026-01-30 08:27:48,534 views Method 1 failed: [Errno 101] Network is unreachable
+ERROR 2026-01-30 08:27:48,538 views Method 2 also failed: [Errno 101] Network is unreachable
+ERROR 2026-01-30 08:27:48,538 views Error sending status SMS: SMSService.send_sms() got an unexpected keyword argument 'purpose'
+ERROR 2026-01-30 12:30:26,573 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-01-30 12:31:53,824 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-01-30 12:32:24,435 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-01-30 12:52:18,175 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-01-30 12:53:03,011 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+INFO 2026-01-31 17:23:56,670 views Login attempt for identifier: 0769691384
+INFO 2026-01-31 17:23:56,673 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-31 17:23:56,737 views Phone search for 0769691384: Found
+INFO 2026-01-31 17:23:57,775 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-31 17:23:57,844 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-31 17:23:57,844 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-31 17:24:04,239 views Login attempt for identifier: 0769691384
+INFO 2026-01-31 17:24:04,239 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-01-31 17:24:04,251 views Phone search for 0769691384: Found
+INFO 2026-01-31 17:24:05,340 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-31 17:24:05,365 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-01-31 17:24:05,365 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+ERROR 2026-01-31 23:24:08,603 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-01-31 23:24:56,384 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-02-01 00:20:53,299 views Failed to update service request: {'preferred_service_date': [ErrorDetail(string='Preferred service date cannot be in the past', code='invalid')]}
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 930, in update
+    serializer.is_valid(raise_exception=True)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 233, in is_valid
+    raise ValidationError(self.errors)
+rest_framework.exceptions.ValidationError: {'preferred_service_date': [ErrorDetail(string='Preferred service date cannot be in the past', code='invalid')]}
+ERROR 2026-02-01 00:21:09,863 views Failed to update service request: {'preferred_service_date': [ErrorDetail(string='Preferred service date cannot be in the past', code='invalid')]}
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 930, in update
+    serializer.is_valid(raise_exception=True)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 233, in is_valid
+    raise ValidationError(self.errors)
+rest_framework.exceptions.ValidationError: {'preferred_service_date': [ErrorDetail(string='Preferred service date cannot be in the past', code='invalid')]}
+ERROR 2026-02-01 00:23:16,430 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:23:32,568 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:23:51,830 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:24:19,567 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:24:34,876 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:25:04,745 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:26:33,168 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:27:58,043 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:28:08,382 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+ERROR 2026-02-01 00:31:44,039 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-02-01 01:07:11,232 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-02-01 03:28:54,100 views Failed to update service request: No CustomerRequest matches the given query.
+Traceback (most recent call last):
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+    return queryset.get(*args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/db/models/query.py", line 639, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+registration.models.CustomerRequest.DoesNotExist: CustomerRequest matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 919, in update
+    instance = self.get_object()
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 100, in get_object
+    obj = get_object_or_404(queryset, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/generics.py", line 19, in get_object_or_404
+    return _get_object_or_404(queryset, *filter_args, **filter_kwargs)
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/django/shortcuts.py", line 92, in get_object_or_404
+    raise Http404(
+        "No %s matches the given query." % queryset.model._meta.object_name
+    )
+django.http.response.Http404: No CustomerRequest matches the given query.
+ERROR 2026-02-01 11:29:48,843 views Failed to send status change email: 'CustomUser' object has no attribute 'get_full_name'
+ERROR 2026-02-01 11:30:36,469 views Failed to send status change email: 'CustomUser' object has no attribute 'get_full_name'
+ERROR 2026-02-01 11:37:10,470 views Failed to send deletion email: 'CustomUser' object has no attribute 'get_full_name'
+ERROR 2026-02-01 11:38:45,829 views Failed to send deletion email: 'CustomUser' object has no attribute 'get_full_name'
+ERROR 2026-02-01 11:58:34,506 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-01 11:58:34,510 views Garage notifications sent for request REQ-4AB18D99
+INFO 2026-02-01 19:08:31,580 views Login attempt for identifier: 0769691384
+INFO 2026-02-01 19:08:31,595 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-02-01 19:08:31,731 views Phone search for 0769691384: Found
+INFO 2026-02-01 19:08:33,006 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-01 19:08:33,068 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-01 19:08:33,071 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-01 19:08:40,603 views Login attempt for identifier: 0769691384
+INFO 2026-02-01 19:08:40,604 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-02-01 19:08:40,621 views Phone search for 0769691384: Found
+INFO 2026-02-01 19:08:41,722 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-01 19:08:41,748 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-01 19:08:41,749 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+ERROR 2026-02-01 19:09:00,833 views Failed to send deletion email: 'CustomUser' object has no attribute 'get_full_name'
+INFO 2026-02-02 02:07:28,999 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-02 02:07:29,150 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-02 02:07:30,142 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-02 02:07:30,201 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-02 02:07:30,202 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+ERROR 2026-02-02 02:23:02,361 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-02 02:23:02,394 views Garage notifications sent for request REQ-5F7DF8D2
+ERROR 2026-02-02 02:23:30,164 views Failed to send status change email: 'CustomUser' object has no attribute 'get_full_name'
+ERROR 2026-02-02 02:23:44,230 views Failed to send status change email: 'CustomUser' object has no attribute 'get_full_name'
+INFO 2026-02-02 12:12:30,099 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:12:30,107 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:12:30,124 views Phone search for 0711545317: Found
+WARNING 2026-02-02 12:12:31,118 views Invalid password for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-02 12:12:40,348 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:12:40,348 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:12:40,358 views Phone search for 0711545317: Found
+WARNING 2026-02-02 12:12:41,348 views Invalid password for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-02 12:15:28,515 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:15:28,515 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:15:28,537 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 12:15:28,538 views No user found for phone: 0711545317
+INFO 2026-02-02 12:15:35,805 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:15:35,805 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:15:35,822 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 12:15:35,822 views No user found for phone: 0711545317
+INFO 2026-02-02 12:15:43,204 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:15:43,204 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:15:43,217 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 12:15:43,218 views No user found for phone: 0711545317
+INFO 2026-02-02 12:17:04,105 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:17:04,105 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:17:04,128 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 12:17:04,128 views No user found for phone: 0711545317
+INFO 2026-02-02 12:17:29,808 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:17:29,808 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:17:29,835 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 12:17:29,835 views No user found for phone: 0711545317
+INFO 2026-02-02 12:58:17,687 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:58:17,688 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:58:17,709 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 12:58:17,709 views No user found for phone: 0711545317
+INFO 2026-02-02 12:59:30,400 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 12:59:30,401 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 12:59:30,420 views Phone search for 0711545317: Found
+INFO 2026-02-02 12:59:32,124 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-02 12:59:32,166 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-02 12:59:32,166 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+ERROR 2026-02-02 13:04:07,761 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-02 13:04:07,776 views Garage notifications sent for request REQ-4C0A0A1F
+INFO 2026-02-02 14:15:39,226 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 14:15:39,228 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 14:15:39,253 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 14:15:39,253 views No user found for phone: 0711545317
+INFO 2026-02-02 14:15:45,015 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 14:15:45,015 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 14:15:45,032 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 14:15:45,032 views No user found for phone: 0711545317
+INFO 2026-02-02 14:16:53,285 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 14:16:53,286 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 14:16:53,303 views Phone search for 0711545317: Not found
+WARNING 2026-02-02 14:16:53,303 views No user found for phone: 0711545317
+INFO 2026-02-02 14:17:43,852 views Login attempt for identifier: 0711545317
+INFO 2026-02-02 14:17:43,852 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-02 14:17:43,895 views Phone search for 0711545317: Found
+INFO 2026-02-02 14:17:46,130 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-02 14:17:46,173 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-02 14:17:46,174 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-03 03:44:03,759 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-03 03:44:03,811 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-03 03:44:04,923 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-03 03:44:05,093 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-03 03:44:05,094 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-06 05:52:11,050 views Login attempt for identifier: 0742578691
+INFO 2026-02-06 05:52:11,051 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-02-06 05:52:11,138 views Phone search for 0742578691: Not found
+WARNING 2026-02-06 05:52:11,138 views No user found for phone: 0742578691
+INFO 2026-02-06 05:52:34,985 views Login attempt for identifier: 0769691384
+INFO 2026-02-06 05:52:34,985 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-02-06 05:52:35,009 views Phone search for 0769691384: Found
+WARNING 2026-02-06 05:52:36,910 views Invalid password for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-06 05:53:04,215 views Login attempt for identifier: 0742578691
+INFO 2026-02-06 05:53:04,215 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-02-06 05:53:04,232 views Phone search for 0742578691: Not found
+WARNING 2026-02-06 05:53:04,232 views No user found for phone: 0742578691
+INFO 2026-02-06 05:55:31,175 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-06 05:55:31,191 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-06 05:55:32,415 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-06 05:55:32,478 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-06 05:55:32,479 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:37:31,865 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-07 14:37:31,888 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-07 14:37:32,798 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:37:32,856 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:37:32,856 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:37:37,673 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-07 14:37:37,682 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-07 14:37:38,701 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:37:38,722 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:37:38,722 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:50:48,391 views Login attempt for identifier: 0796961384
+INFO 2026-02-07 14:50:48,392 views Phone normalization: 0796961384 -> 0796961384
+INFO 2026-02-07 14:50:48,405 views Phone search for 0796961384: Found
+INFO 2026-02-07 14:50:49,893 views Password valid for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-07 14:50:49,917 views Tokens generated for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-07 14:50:49,917 views Login successful for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-07 14:52:43,777 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-07 14:52:43,788 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-07 14:52:45,071 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:52:45,094 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 14:52:45,094 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 19:47:56,524 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-07 19:47:56,656 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-07 19:47:57,692 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 19:47:57,743 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-07 19:47:57,744 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-09 06:59:24,235 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-09 06:59:24,425 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-09 06:59:25,316 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-09 06:59:25,366 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-09 06:59:25,367 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-10 11:37:50,312 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-10 11:37:50,444 views Email search for mwananjelaelisha36@gmail.com: Found
+WARNING 2026-02-10 11:37:51,366 views Invalid password for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-10 11:37:58,454 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-10 11:37:58,466 views Email search for mwananjelaelisha36@gmail.com: Found
+WARNING 2026-02-10 11:37:59,421 views Invalid password for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-10 11:38:10,385 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-10 11:38:10,396 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-10 11:38:11,493 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-10 11:38:11,546 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-10 11:38:11,547 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-11 07:59:51,102 views Login attempt for identifier: 0711545317
+INFO 2026-02-11 07:59:51,110 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-11 07:59:51,126 views Phone search for 0711545317: Not found
+WARNING 2026-02-11 07:59:51,126 views No user found for phone: 0711545317
+INFO 2026-02-11 08:01:37,468 views Login attempt for identifier: 0795455317
+INFO 2026-02-11 08:01:37,469 views Phone normalization: 0795455317 -> 0795455317
+INFO 2026-02-11 08:01:37,480 views Phone search for 0795455317: Found
+INFO 2026-02-11 08:01:39,022 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-11 08:01:39,058 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-11 08:01:39,059 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+ERROR 2026-02-11 11:48:30,701 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-11 11:48:30,707 views Garage notifications sent for request REQ-354A50BA
+INFO 2026-02-12 14:00:43,261 views Login attempt for identifier: 0769691384
+INFO 2026-02-12 14:00:43,263 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-02-12 14:00:43,329 views Phone search for 0769691384: Found
+INFO 2026-02-12 14:00:44,403 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-12 14:00:44,467 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-12 14:00:44,467 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+ERROR 2026-02-13 00:39:29,711 views Failed to create service request: {'location_latitude': [ErrorDetail(string='Ensure that there are no more than 6 decimal places.', code='max_decimal_places')], 'location_longitude': [ErrorDetail(string='Ensure that there are no more than 6 decimal places.', code='max_decimal_places')]}
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 886, in create
+    serializer.is_valid(raise_exception=True)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 233, in is_valid
+    raise ValidationError(self.errors)
+rest_framework.exceptions.ValidationError: {'location_latitude': [ErrorDetail(string='Ensure that there are no more than 6 decimal places.', code='max_decimal_places')], 'location_longitude': [ErrorDetail(string='Ensure that there are no more than 6 decimal places.', code='max_decimal_places')]}
+ERROR 2026-02-13 00:40:20,571 views Failed to create service request: {'location_latitude': [ErrorDetail(string='Ensure that there are no more than 6 decimal places.', code='max_decimal_places')], 'location_longitude': [ErrorDetail(string='Ensure that there are no more than 6 decimal places.', code='max_decimal_places')]}
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 886, in create
+    serializer.is_valid(raise_exception=True)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/AutoFix/.virtualenvs/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 233, in is_valid
+    raise ValidationError(self.errors)
+rest_framework.exceptions.ValidationError: {'location_latitude': [ErrorDetail(string='Ensure that there are no more than 6 decimal places.', code='max_decimal_places')], 'location_longitude': [ErrorDetail(string='Ensure that there are no more than 6 decimal places.', code='max_decimal_places')]}
+INFO 2026-02-13 01:05:19,728 views Login attempt for identifier: 0769691384
+INFO 2026-02-13 01:05:19,729 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-02-13 01:05:19,739 views Phone search for 0769691384: Found
+INFO 2026-02-13 01:05:20,970 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-13 01:05:20,998 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-13 01:05:20,999 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+ERROR 2026-02-13 01:17:47,105 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-13 01:17:47,115 views Garage notifications sent for request REQ-DD560691
+ERROR 2026-02-13 01:26:27,463 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-13 01:26:27,464 views Garage notifications sent for request REQ-F0FDA22B
+ERROR 2026-02-13 01:30:21,370 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-13 01:30:21,371 views Garage notifications sent for request REQ-9AC0F7FB
+ERROR 2026-02-13 02:07:42,706 views Failed to send status change email: 'CustomUser' object has no attribute 'get_full_name'
+ERROR 2026-02-13 04:40:05,397 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-13 04:40:05,418 views Garage notifications sent for request REQ-C44D7EC0
+ERROR 2026-02-13 04:41:16,046 views Failed to send status change email: 'CustomUser' object has no attribute 'get_full_name'
+ERROR 2026-02-13 04:41:42,875 views Failed to send status change email: 'CustomUser' object has no attribute 'get_full_name'
+INFO 2026-02-13 06:29:20,072 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-13 06:29:20,143 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-13 06:29:21,431 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-13 06:29:21,490 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-13 06:29:21,492 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-15 11:41:45,159 views Login attempt for identifier: 0742578691
+INFO 2026-02-15 11:41:45,160 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-02-15 11:41:45,194 views Phone search for 0742578691: Not found
+WARNING 2026-02-15 11:41:45,194 views No user found for phone: 0742578691
+INFO 2026-02-15 11:41:53,802 views Login attempt for identifier: 0742578691
+INFO 2026-02-15 11:41:53,803 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-02-15 11:41:53,825 views Phone search for 0742578691: Not found
+WARNING 2026-02-15 11:41:53,825 views No user found for phone: 0742578691
+INFO 2026-02-15 11:42:19,376 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-15 11:42:19,391 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-15 11:42:20,466 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-15 11:42:20,537 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-15 11:42:20,537 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-16 14:41:48,996 views Login attempt for identifier: 0795455317
+INFO 2026-02-16 14:41:49,009 views Phone normalization: 0795455317 -> 0795455317
+INFO 2026-02-16 14:41:49,131 views Phone search for 0795455317: Found
+INFO 2026-02-16 14:41:50,147 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-16 14:41:50,204 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-16 14:41:50,205 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-17 11:47:33,302 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-17 11:47:33,335 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-17 11:47:34,612 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-17 11:47:34,655 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-17 11:47:34,656 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-17 16:06:03,305 views Login attempt for identifier: barakalumwecha196@gmail.com
+INFO 2026-02-17 16:06:03,326 views Email search for barakalumwecha196@gmail.com: Found
+INFO 2026-02-17 16:06:05,576 views Password valid for user: 9669703d-b93f-4b28-98d0-ded22eeb597f
+INFO 2026-02-17 16:06:05,619 views Tokens generated for user: 9669703d-b93f-4b28-98d0-ded22eeb597f
+INFO 2026-02-17 16:06:05,620 views Login successful for user: 9669703d-b93f-4b28-98d0-ded22eeb597f
+INFO 2026-02-18 17:23:18,746 views Login attempt for identifier: 0795455317
+INFO 2026-02-18 17:23:18,762 views Phone normalization: 0795455317 -> 0795455317
+INFO 2026-02-18 17:23:18,985 views Phone search for 0795455317: Not found
+WARNING 2026-02-18 17:23:18,986 views No user found for phone: 0795455317
+INFO 2026-02-18 17:23:27,648 views Login attempt for identifier: 0795455317
+INFO 2026-02-18 17:23:27,648 views Phone normalization: 0795455317 -> 0795455317
+INFO 2026-02-18 17:23:27,670 views Phone search for 0795455317: Not found
+WARNING 2026-02-18 17:23:27,670 views No user found for phone: 0795455317
+INFO 2026-02-23 14:23:14,860 views Login attempt for identifier: 0795455317
+INFO 2026-02-23 14:23:14,860 views Phone normalization: 0795455317 -> 0795455317
+INFO 2026-02-23 14:23:14,903 views Phone search for 0795455317: Not found
+WARNING 2026-02-23 14:23:14,904 views No user found for phone: 0795455317
+INFO 2026-02-23 14:23:16,772 views Login attempt for identifier: 0795455317
+INFO 2026-02-23 14:23:16,773 views Phone normalization: 0795455317 -> 0795455317
+INFO 2026-02-23 14:23:16,792 views Phone search for 0795455317: Not found
+WARNING 2026-02-23 14:23:16,793 views No user found for phone: 0795455317
+INFO 2026-02-23 14:25:11,434 views Login attempt for identifier: 0795455317
+INFO 2026-02-23 14:25:11,434 views Phone normalization: 0795455317 -> 0795455317
+INFO 2026-02-23 14:25:11,453 views Phone search for 0795455317: Found
+INFO 2026-02-23 14:25:12,897 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-23 14:25:12,974 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-23 14:25:12,974 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+ERROR 2026-02-23 14:31:31,360 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-23 14:31:31,367 views Garage notifications sent for request REQ-514ED790
+ERROR 2026-02-23 14:33:18,839 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-23 14:33:18,841 views Garage notifications sent for request REQ-86784037
+INFO 2026-02-25 01:54:58,838 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-25 01:54:58,991 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-25 01:55:00,605 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 01:55:00,665 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 01:55:00,666 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 02:13:06,305 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-25 02:13:06,322 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-25 02:13:08,182 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 02:13:08,214 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 02:13:08,215 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 02:14:10,133 views Login attempt for identifier: 0795455317
+INFO 2026-02-25 02:14:10,133 views Phone normalization: 0795455317 -> 0795455317
+INFO 2026-02-25 02:14:10,152 views Phone search for 0795455317: Found
+WARNING 2026-02-25 02:14:11,915 views Invalid password for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-25 02:14:28,591 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-25 02:14:28,606 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-25 02:14:29,918 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 02:14:29,952 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 02:14:29,952 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 02:15:22,257 views Login attempt for identifier: mwananjelaelisha15@gmail.com
+INFO 2026-02-25 02:15:22,282 views Email search for mwananjelaelisha15@gmail.com: Found
+INFO 2026-02-25 02:15:24,696 views Password valid for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-25 02:15:24,734 views Tokens generated for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-25 02:15:24,737 views Login successful for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-25 04:06:01,238 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-25 04:06:01,254 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-25 04:06:03,577 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 04:06:03,614 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 04:06:03,614 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-25 04:10:24,005 views Login attempt for identifier: mwananjelaelisha15@gmail.com
+INFO 2026-02-25 04:10:24,021 views Email search for mwananjelaelisha15@gmail.com: Found
+INFO 2026-02-25 04:10:25,171 views Password valid for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-25 04:10:25,203 views Tokens generated for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-25 04:10:25,203 views Login successful for user: ebf94dcf-a735-4138-9b12-67bdf82a0f5c
+INFO 2026-02-25 04:41:35,405 views Login attempt for identifier: 0711545317
+INFO 2026-02-25 04:41:35,406 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-25 04:41:35,419 views Phone search for 0711545317: Found
+INFO 2026-02-25 04:41:36,650 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-25 04:41:36,684 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-25 04:41:36,684 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+ERROR 2026-02-25 04:45:03,721 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-25 04:45:03,737 views Garage notifications sent for request REQ-6776AF48
+INFO 2026-02-26 04:53:19,097 views Login attempt for identifier: 0711545317
+INFO 2026-02-26 04:53:19,112 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-26 04:53:19,283 views Phone search for 0711545317: Found
+INFO 2026-02-26 04:53:20,731 views Password valid for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-26 04:53:20,800 views Tokens generated for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-26 04:53:20,801 views Login successful for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+ERROR 2026-02-26 05:02:44,108 views Failed to send email notification: 'CustomUser' object has no attribute 'get_full_name'
+Traceback (most recent call last):
+  File "/home/AutoFix/quickfix_backend/users/views.py", line 750, in send_request_email_notification
+    'customer_name': request_instance.customer.get_full_name() or request_instance.customer.email,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'get_full_name'. Did you mean: 'full_name'?
+INFO 2026-02-26 05:02:44,127 views Garage notifications sent for request REQ-01563E8B
+INFO 2026-02-26 06:13:22,436 views Login attempt for identifier: mwananjelaelisha36@gmail.com
+INFO 2026-02-26 06:13:22,465 views Email search for mwananjelaelisha36@gmail.com: Found
+INFO 2026-02-26 06:13:24,577 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-26 06:13:24,616 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-26 06:13:24,616 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-26 06:17:51,361 views Login attempt for identifier: mwananjelaelisha@gmail.com
+INFO 2026-02-26 06:17:51,375 views Email search for mwananjelaelisha@gmail.com: Not found
+WARNING 2026-02-26 06:17:51,376 views No user found for email: mwananjelaelisha@gmail.com
+INFO 2026-02-26 06:18:17,025 views Login attempt for identifier: 0769691384
+INFO 2026-02-26 06:18:17,025 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-02-26 06:18:17,052 views Phone search for 0769691384: Found
+INFO 2026-02-26 06:18:18,700 views Password valid for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-26 06:18:18,724 views Tokens generated for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-26 06:18:18,725 views Login successful for user: c635864d-486e-42d6-8c41-001b4bf5e2a2
+INFO 2026-02-26 06:21:15,033 views Login attempt for identifier: 0711545317
+INFO 2026-02-26 06:21:15,034 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-26 06:21:15,049 views Phone search for 0711545317: Found
+WARNING 2026-02-26 06:21:16,187 views Invalid password for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-26 06:21:48,901 views Login attempt for identifier: 0711545317
+INFO 2026-02-26 06:21:48,901 views Phone normalization: 0711545317 -> 0711545317
+INFO 2026-02-26 06:21:48,913 views Phone search for 0711545317: Found
+WARNING 2026-02-26 06:21:50,013 views Invalid password for user: 5151947b-8cf2-4bca-9b6b-3a6733a8d41e
+INFO 2026-02-26 06:27:48,871 views Login attempt for identifier: 0742578691
+INFO 2026-02-26 06:27:48,872 views Phone normalization: 0742578691 -> 0742578691
+INFO 2026-02-26 06:27:48,886 views Phone search for 0742578691: Found
+INFO 2026-02-26 06:27:50,249 views Password valid for user: 5414fff8-dd6c-4056-a686-ac39078e2649
+INFO 2026-02-26 06:27:50,322 views Tokens generated for user: 5414fff8-dd6c-4056-a686-ac39078e2649
+INFO 2026-02-26 06:27:50,322 views Login successful for user: 5414fff8-dd6c-4056-a686-ac39078e2649
+INFO 2026-02-26 06:32:35,133 views Login attempt for identifier: 0769691384
+INFO 2026-02-26 06:32:35,133 views Phone normalization: 0769691384 -> 0769691384
+INFO 2026-02-26 06:32:35,158 views Phone search for 0769691384: Found
+INFO 2026-02-26 06:32:36,649 views Password valid for user: 6f4260f8-f0e8-4f2a-aec9-18c1ae95fe08
+INFO 2026-02-26 06:32:36,717 views Tokens generated for user: 6f4260f8-f0e8-4f2a-aec9-18c1ae95fe08
+INFO 2026-02-26 06:32:36,717 views Login successful for user: 6f4260f8-f0e8-4f2a-aec9-18c1ae95fe08

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #f8f9fa; padding: 20px; text-align: center; }
+        .otp-code { 
+            font-size: 32px; 
+            font-weight: bold; 
+            color: #007bff;
+            letter-spacing: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>QuickFix Automotive</h2>
+        </div>
+        
+        <h3>Your Verification Code</h3>
+        
+        <p>Hello {{ user.first_name }},</p>
+        
+        <p>Your verification code for {{ purpose }} is:</p>
+        
+        <div class="otp-code">{{ otp_code }}</div>
+        
+        <p>This code expires in {{ expiry_minutes }} minutes.</p>
+        
+        {% if is_resend %}
+        <p><em>This is a new code requested by you.</em></p>
+        {% endif %}
+        
+        <p>If you didn't request this code, please ignore this email.</p>
+        
+        <div class="footer">
+            <p>Best regards,<br>
+            <strong>QuickFix Automotive Team</strong></p>
+            <p style="font-size: 12px; color: #6c757d;">
+                This is an automated message. Please do not reply to this email.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
