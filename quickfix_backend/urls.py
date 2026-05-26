@@ -16,15 +16,18 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # API endpoints
-    path('', include('registration.urls')),  # Your registration app URLs
-     path('', include('users.urls')),
+    path('api/', include('registration.urls')),  # Your registration app URLs
+    #  path('', include('users.urls')),
 
     # Authentication endpoints
     path('api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('', include('mechanics.urls')),  # Add this line
+    path('api/', include('mechanics.urls')),  # Add this line
+    path('api/', include('authe.urls')),  # Add this line
+    path('api/',include('payments.urls')),
+
 ]
 
 # Serve media files in development

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1f2937; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #0891b2, #0e7490); color: white; padding: 30px; text-align: center; border-radius: 12px 12px 0 0; }
+        .content { background: #f8fafc; padding: 30px; border-radius: 0 0 12px 12px; }
+        .request-details { background: #ffffff; padding: 20px; border-radius: 10px; margin: 15px 0; border: 1px solid #e2e8f0; }
+        .detail-row { display: flex; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+        .detail-label { font-weight: 600; width: 120px; color: #475569; }
+        .detail-value { flex: 1; color: #0f172a; }
+        .priority-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .priority-low { background: #d1fae5; color: #059669; }
+        .priority-medium { background: #fef3c7; color: #d97706; }
+        .priority-high { background: #fee2e2; color: #dc2626; }
+        .priority-urgent { background: #fef2f2; color: #ef4444; }
+        .button { background: #0891b2; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; margin-top: 20px; }
+        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; }
+        .emergency-badge { background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>🔧 New Service Request Available</h2>
+            <p>A customer needs your automotive expertise</p>
+        </div>
+        <div class="content">
+            <h3>Dear Garage Partner,</h3>
+            <p>A new service request has been submitted and is waiting for your response.</p>
+            
+            <div class="request-details">
+                <h4 style="margin-bottom: 15px; color: #0891b2;">Request Details</h4>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Request ID:</span>
+                    <span class="detail-value">{{ request_id }}</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Service Type:</span>
+                    <span class="detail-value">{{ service_type }}</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Priority:</span>
+                    <span class="detail-value">
+                        <span class="priority-badge priority-{{ priority|lower }}">
+                            {{ priority|title }}
+                        </span>
+                        {% if is_emergency %}
+                            <span class="emergency-badge">🚨 EMERGENCY</span>
+                        {% endif %}
+                    </span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Customer:</span>
+                    <span class="detail-value">{{ customer_name }}</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Location:</span>
+                    <span class="detail-value">{{ customer_location }}</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Vehicle:</span>
+                    <span class="detail-value">{{ vehicle_details }}</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Description:</span>
+                    <span class="detail-value">{{ description }}</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Submitted:</span>
+                    <span class="detail-value">{{ created_at }}</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Contact:</span>
+                    <span class="detail-value">
+                        {{ customer_phone }} | {{ customer_email }}
+                    </span>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="{{ dashboard_url }}" class="button">View & Respond to Request</a>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 14px; color: #64748b;">
+                Respond quickly to secure this customer and grow your business!
+            </p>
+        </div>
+        <div class="footer">
+            <p>QuickFix Automotive - Connecting Customers with Quality Garages</p>
+            <p>© 2025 QuickFix. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

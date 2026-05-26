@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1f2937; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #0891b2, #0e7490); color: white; padding: 30px; text-align: center; border-radius: 12px 12px 0 0; }
+        .content { background: #f8fafc; padding: 30px; border-radius: 0 0 12px 12px; }
+        .garage-box { background: #ffffff; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #0891b2; }
+        .button { background: #0891b2; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; }
+        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>🔧 Garage Response</h2>
+            <p>A garage has responded to your request</p>
+        </div>
+        <div class="content">
+            <h3>Dear {{ customer_name }},</h3>
+            <p>Good news! A garage has responded to your service request.</p>
+            
+            <div class="garage-box">
+                <h4 style="margin-bottom: 15px; color: #0891b2;">Garage Details</h4>
+                <p><strong>Garage Name:</strong> {{ garage_name }}</p>
+                <p><strong>Contact:</strong> {{ garage_phone }} | {{ garage_email }}</p>
+                <p><strong>Status Update:</strong> {{ new_status }}</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="{{ track_url }}" class="button">View Full Details</a>
+            </div>
+            
+            <p style="margin-top: 20px;">You can review their response and contact them directly.</p>
+        </div>
+        <div class="footer">
+            <p>QuickFix Automotive - Connecting You with Quality Garages</p>
+        </div>
+    </div>
+</body>
+</html>

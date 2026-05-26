@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1f2937; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #0891b2, #0e7490); color: white; padding: 30px; text-align: center; border-radius: 12px 12px 0 0; }
+        .content { background: #f8fafc; padding: 30px; border-radius: 0 0 12px 12px; }
+        .info-box { background: #ffffff; padding: 20px; border-radius: 10px; margin: 15px 0; border: 1px solid #e2e8f0; }
+        .button { background: #0891b2; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; margin-top: 10px; }
+        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>✅ Service Request Created</h2>
+            <p>Your request has been successfully submitted</p>
+        </div>
+        <div class="content">
+            <h3>Dear {{ customer_name }},</h3>
+            <p>Thank you for choosing QuickFix! Your service request has been received and is being processed.</p>
+            
+            <div class="info-box">
+                <h4 style="margin-bottom: 15px; color: #0891b2;">Request Summary</h4>
+                <p><strong>Request ID:</strong> {{ request_id }}</p>
+                <p><strong>Service Type:</strong> {{ service_type }}</p>
+                <p><strong>Status:</strong> {{ status }}</p>
+                <p><strong>Priority:</strong> {{ priority }}</p>
+                <p><strong>Submitted:</strong> {{ submitted_at }}</p>
+            </div>
+            
+            <div class="info-box">
+                <h4 style="margin-bottom: 15px; color: #0891b2;">What Happens Next?</h4>
+                <ol style="margin-left: 20px;">
+                    <li>We'll notify all registered garages about your request</li>
+                    <li>Garages will review and respond with quotes</li>
+                    <li>You'll receive email notifications when garages respond</li>
+                    <li>Choose the best offer and schedule your service</li>
+                </ol>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="{{ track_url }}" class="button">Track Your Request</a>
+            </div>
+        </div>
+        <div class="footer">
+            <p>QuickFix Automotive - Fast, Reliable Service</p>
+            <p>Need help? Contact us at support@quickfix.com</p>
+        </div>
+    </div>
+</body>
+</html>

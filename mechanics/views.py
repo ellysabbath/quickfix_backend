@@ -1,1514 +1,794 @@
-# views.py
-from rest_framework import viewsets, status, filters
+# mechanics/views.py - WITH EMBEDDED HTML EMAIL TEMPLATES
+
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q, Count, Avg
+from django.db.models import Q
 from django.utils import timezone
-from datetime import timedelta
-from django.core.mail import EmailMultiAlternatives
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.core.paginator import Paginator
+from django.core.mail import send_mail
 from django.conf import settings
-from django.template.loader import render_to_string
-from django.shortcuts import get_object_or_404
-import logging
-
-from users.models import Garage
 from .models import (
-    ServiceRequest, ServiceRequestUpdate, 
-    ServiceRequestAttachment, ServiceType
+    ServiceRequest, ServiceRequestUpdate,
+    ServiceRequestNote, ServiceType
 )
 from .serializers import (
-    ServiceRequestSerializer, ServiceRequestListSerializer,
-    CreateServiceRequestSerializer, ServiceRequestUpdateSerializer,
-    ServiceRequestAttachmentSerializer, ServiceTypeSerializer,
-    GarageSerializer, UpdateServiceRequestStatusSerializer
+    ServiceRequestCreateSerializer, ServiceRequestUpdateSerializer,
+    ServiceRequestDetailSerializer, ServiceRequestListSerializer,
+    ServiceRequestUpdateHistorySerializer, ServiceRequestNoteSerializer,
+    ServiceTypeSerializer
 )
+import json
+import logging
 
 logger = logging.getLogger(__name__)
 
 
-class GarageViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    ViewSet for viewing garages (read-only)
-    Anyone can view garage listings
-    """
-    queryset = Garage.objects.filter(is_active=True, is_open=True).order_by('name')
-    serializer_class = GarageSerializer
-    permission_classes = [AllowAny]
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
-    search_fields = ['name', 'address', 'city', 'services__name']
-    filterset_fields = ['city', 'delivery_available', 'is_verified']
-    ordering_fields = ['rating', 'name', 'created_at']
-    
-    @action(detail=True, methods=['get'])
-    def service_requests(self, request, pk=None):
-        """Get all service requests for a specific garage"""
-        garage = self.get_object()
-        requests = garage.garage_service_requests.filter(is_archived=False).order_by('-created_at')
-        
-        # Allow filtering by status
-        status_filter = request.query_params.get('status')
-        if status_filter:
-            status_list = status_filter.split(',')
-            requests = requests.filter(status__in=status_list)
-        
-        page = self.paginate_queryset(requests)
-        if page is not None:
-            serializer = ServiceRequestListSerializer(page, many=True, context={'request': request})
-            return self.get_paginated_response(serializer.data)
-        
-        serializer = ServiceRequestListSerializer(requests, many=True, context={'request': request})
-        return Response(serializer.data)
-    
-    @action(detail=False, methods=['get'])
-    def cities(self, request):
-        """Get list of all cities with garages"""
-        cities = Garage.objects.filter(
-            is_active=True, 
-            is_open=True,
-            city__isnull=False
-        ).exclude(city='').values_list('city', flat=True).distinct().order_by('city')
-        return Response({'cities': list(cities)})
-    
-    @action(detail=False, methods=['get'])
-    def statistics(self, request):
-        """Get garage statistics"""
-        total_garages = Garage.objects.filter(is_active=True, is_open=True).count()
-        verified_garages = Garage.objects.filter(is_active=True, is_open=True, is_verified=True).count()
-        
-        cities_with_garages = Garage.objects.filter(
-            is_active=True, 
-            is_open=True
-        ).exclude(city='').values('city').distinct().count()
-        
-        return Response({
-            'total_garages': total_garages,
-            'verified_garages': verified_garages,
-            'cities_with_garages': cities_with_garages,
-            'garages_with_delivery': Garage.objects.filter(
-                is_active=True, is_open=True, delivery_available=True
-            ).count(),
-            'average_rating': Garage.objects.filter(
-                is_active=True, is_open=True, rating__isnull=False
-            ).aggregate(Avg('rating'))['rating__avg'] or 0
-        })
-
-
-class ServiceTypeViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    ViewSet for viewing service types
-    Anyone can view service types
-    """
-    queryset = ServiceType.objects.filter(is_active=True).order_by('name')
-    serializer_class = ServiceTypeSerializer
-    permission_classes = [AllowAny]
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['name', 'description']
-    ordering_fields = ['name', 'base_price']
-
-
 class ServiceRequestViewSet(viewsets.ModelViewSet):
     """
-    ViewSet for Service Request CRUD operations
-    Email System:
-    - Garage receives email when NEW request is created
-    - Request sender receives email when request is UPDATED
+    Complete CRUD for Service Requests with Email Notifications
     """
-    permission_classes = [AllowAny]
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
-    search_fields = ['first_name', 'last_name', 'location', 'request_id', 'email', 'phone']
-    filterset_fields = ['status', 'priority', 'garage', 'is_emergency', 'user']
-    ordering_fields = ['created_at', 'submitted_at', 'estimated_cost', 'priority', 'status']
+    queryset = ServiceRequest.objects.all().order_by('-created_at')
+    
+    def get_permissions(self):
+        return [AllowAny()]
     
     def get_serializer_class(self):
-        """Return appropriate serializer based on action"""
         if self.action == 'create':
-            return CreateServiceRequestSerializer
+            return ServiceRequestCreateSerializer
+        elif self.action in ['update', 'partial_update']:
+            return ServiceRequestUpdateSerializer
         elif self.action == 'list':
             return ServiceRequestListSerializer
-        elif self.action == 'update_status':
-            return UpdateServiceRequestStatusSerializer
-        return ServiceRequestSerializer
+        return ServiceRequestDetailSerializer
     
     def get_queryset(self):
-        """Return all service requests"""
-        queryset = ServiceRequest.objects.all()
-        queryset = self.apply_filters(queryset)
-        return queryset.order_by('-created_at')
-    
-    def apply_filters(self, queryset):
-        """Apply additional filters from query parameters"""
-        # Filter by garage
-        garage_id = self.request.query_params.get('garage_id')
-        if garage_id:
-            queryset = queryset.filter(garage_id=garage_id)
+        queryset = ServiceRequest.objects.all().order_by('-created_at')
         
-        # Filter by date range
-        start_date = self.request.query_params.get('start_date')
-        end_date = self.request.query_params.get('end_date')
-        if start_date and end_date:
-            queryset = queryset.filter(created_at__date__range=[start_date, end_date])
-        
-        # Filter by status
         status_param = self.request.query_params.get('status')
         if status_param:
-            status_list = status_param.split(',')
-            queryset = queryset.filter(status__in=status_list)
+            queryset = queryset.filter(status=status_param)
         
-        # Filter by priority
-        priority_param = self.request.query_params.get('priority')
-        if priority_param:
-            priority_list = priority_param.split(',')
-            queryset = queryset.filter(priority__in=priority_list)
+        email = self.request.query_params.get('email')
+        if email:
+            queryset = queryset.filter(email=email)
         
-        # Filter by archive status
-        archived = self.request.query_params.get('archived')
-        if archived is not None:
-            queryset = queryset.filter(is_archived=archived.lower() == 'true')
+        phone = self.request.query_params.get('phone')
+        if phone:
+            queryset = queryset.filter(phone__icontains=phone)
+        
+        search = self.request.query_params.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(first_name__icontains=search) |
+                Q(last_name__icontains=search) |
+                Q(email__icontains=search) |
+                Q(phone__icontains=search) |
+                Q(service_type__icontains=search) |
+                Q(garage_name__icontains=search) |
+                Q(request_id__icontains=search)
+            )
         
         return queryset
     
-    def create(self, request, *args, **kwargs):
-        """
-        Create a new service request
-        Send email to GARAGE (not to request sender)
-        """
-        serializer = self.get_serializer(data=request.data, context={'request': request})
-        
-        try:
-            serializer.is_valid(raise_exception=True)
-            service_request = serializer.save()
-            
-            # Send notification email to GARAGE (NOT to request sender)
-            self.send_new_request_email_to_garage(service_request)
-            
-            # Prepare response
-            response_serializer = ServiceRequestSerializer(
-                service_request, 
-                context={'request': request}
-            )
-            
-            return Response(
-                {
-                    'success': True,
-                    'message': 'Service request submitted successfully!',
-                    'request_id': str(service_request.request_id),
-                    'data': response_serializer.data
-                },
-                status=status.HTTP_201_CREATED
-            )
-            
-        except Exception as e:
-            return Response(
-                {
-                    'success': False,
-                    'error': 'Failed to create service request',
-                    'details': str(e)
-                },
-                status=status.HTTP_400_BAD_REQUEST
-            )
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
     
-    def send_new_request_email_to_garage(self, service_request):
-        """
-        Send notification email to GARAGE when new service request is created
-        ONLY garage receives this email
-        """
-        if not service_request.garage or not hasattr(service_request.garage, 'email'):
-            logger.warning(f"No garage or garage email found for request {service_request.request_id}")
-            return
-        
-        garage_email = service_request.garage.email
-        if not garage_email:
-            logger.warning(f"No email address for garage {service_request.garage.name}")
-            return
-        
-        try:
-            # Prepare email context for garage
-            context = {
-                'request_id': str(service_request.request_id)[:8].upper(),
-                'customer_name': service_request.full_name(),
-                'customer_email': service_request.email,
-                'customer_phone': service_request.phone,
-                'service_type': service_request.service_type or 'Vehicle Service',
-                'vehicle_info': f"{service_request.vehicle_year} {service_request.vehicle_make} {service_request.vehicle_model}".strip(),
-                'garage_name': service_request.garage.name,
-                'submitted_date': service_request.submitted_at.strftime('%B %d, %Y') if service_request.submitted_at else timezone.now().strftime('%B %d, %Y'),
-                'submitted_time': service_request.submitted_at.strftime('%I:%M %p') if service_request.submitted_at else timezone.now().strftime('%I:%M %p'),
-                'experience': service_request.experience[:200] + '...' if len(service_request.experience) > 200 else service_request.experience,
-                'location': service_request.location,
-                'priority': service_request.get_priority_display(),
-                'is_emergency': 'YES - URGENT' if service_request.is_emergency else 'No',
-                'support_email': getattr(settings, 'DEFAULT_FROM_EMAIL', 'support@example.com'),
-                'admin_dashboard_url': getattr(settings, 'ADMIN_URL', 'https://admin.yourapp.com'),
-                'current_year': timezone.now().year,
-            }
-            
-            subject = f"🚗 New Service Request #{context['request_id']} - {context['customer_name']}"
-            
-            # Create plain text version
-            plain_message = f"""
-            NEW SERVICE REQUEST NOTIFICATION
-            =================================
-            
-            Hello {context['garage_name']} Team,
-            
-            You have received a new service request!
-            
-            REQUEST DETAILS:
-            ----------------
-            Request ID: {context['request_id']}
-            Customer: {context['customer_name']}
-            Service Type: {context['service_type']}
-            Vehicle: {context['vehicle_info']}
-            Priority: {context['priority']}
-            Emergency: {context['is_emergency']}
-            
-            CUSTOMER CONTACT:
-            -----------------
-            Email: {context['customer_email']}
-            Phone: {context['customer_phone']}
-            Location: {context['location']}
-            
-            ISSUE DESCRIPTION:
-            ------------------
-            {context['experience']}
-            
-            TIMESTAMP:
-            ----------
-            Submitted: {context['submitted_date']} at {context['submitted_time']}
-            
-            ACTION REQUIRED:
-            ----------------
-            1. Review the request details
-            2. Contact customer for diagnosis appointment
-            3. Update request status in dashboard
-            
-            VIEW IN DASHBOARD:
-            ------------------
-            {context['admin_dashboard_url']}/requests/{service_request.request_id}
-            
-            Thank you,
-            Service Request System
-            """
-            
-            # Create HTML version with embedded styling
-            html_message = f"""
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>{subject}</title>
-                <style>
-                    * {{
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
-                    }}
-                    
-                    body {{
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        line-height: 1.6;
-                        color: #333;
-                        background-color: #f7f9fc;
-                    }}
-                    
-                    .email-container {{
-                        max-width: 650px;
-                        margin: 0 auto;
-                        background: #ffffff;
-                        border-radius: 12px;
-                        overflow: hidden;
-                        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-                    }}
-                    
-                    .header {{
-                        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-                        color: white;
-                        padding: 40px 35px;
-                        text-align: center;
-                    }}
-                    
-                    .header h1 {{
-                        font-size: 30px;
-                        font-weight: 700;
-                        margin-bottom: 15px;
-                        letter-spacing: 0.5px;
-                    }}
-                    
-                    .header p {{
-                        font-size: 17px;
-                        opacity: 0.95;
-                        font-weight: 400;
-                    }}
-                    
-                    .urgent-badge {{
-                        display: inline-block;
-                        background: #ff3838;
-                        color: white;
-                        padding: 8px 20px;
-                        border-radius: 20px;
-                        font-weight: bold;
-                        font-size: 14px;
-                        margin-top: 15px;
-                        animation: pulse 2s infinite;
-                    }}
-                    
-                    @keyframes pulse {{
-                        0% {{ opacity: 1; }}
-                        50% {{ opacity: 0.7; }}
-                        100% {{ opacity: 1; }}
-                    }}
-                    
-                    .content {{
-                        padding: 45px 35px;
-                    }}
-                    
-                    .greeting {{
-                        font-size: 20px;
-                        margin-bottom: 35px;
-                        color: #444;
-                        font-weight: 500;
-                    }}
-                    
-                    .request-id-section {{
-                        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-                        border-radius: 10px;
-                        padding: 25px;
-                        margin-bottom: 35px;
-                        border-left: 5px solid #007bff;
-                        text-align: center;
-                    }}
-                    
-                    .request-id-title {{
-                        color: #495057;
-                        font-size: 18px;
-                        margin-bottom: 10px;
-                        font-weight: 600;
-                    }}
-                    
-                    .request-id-value {{
-                        font-size: 36px;
-                        font-weight: 800;
-                        color: #007bff;
-                        letter-spacing: 3px;
-                        margin: 15px 0;
-                        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-                    }}
-                    
-                    .customer-section {{
-                        background: #fff3cd;
-                        border-radius: 10px;
-                        padding: 25px;
-                        margin-bottom: 35px;
-                        border: 2px solid #ffc107;
-                    }}
-                    
-                    .customer-section h2 {{
-                        color: #856404;
-                        font-size: 22px;
-                        margin-bottom: 20px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }}
-                    
-                    .info-grid {{
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                        gap: 20px;
-                        margin-top: 20px;
-                    }}
-                    
-                    .info-card {{
-                        background: white;
-                        padding: 20px;
-                        border-radius: 8px;
-                        border: 1px solid #dee2e6;
-                    }}
-                    
-                    .info-label {{
-                        font-size: 14px;
-                        color: #6c757d;
-                        font-weight: 600;
-                        margin-bottom: 8px;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                    }}
-                    
-                    .info-value {{
-                        font-size: 18px;
-                        color: #212529;
-                        font-weight: 500;
-                    }}
-                    
-                    .vehicle-section {{
-                        background: #d4edda;
-                        border-radius: 10px;
-                        padding: 25px;
-                        margin-bottom: 35px;
-                        border: 2px solid #28a745;
-                    }}
-                    
-                    .vehicle-section h2 {{
-                        color: #155724;
-                        font-size: 22px;
-                        margin-bottom: 20px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }}
-                    
-                    .description-section {{
-                        background: #e2e3e5;
-                        border-radius: 10px;
-                        padding: 25px;
-                        margin-bottom: 35px;
-                    }}
-                    
-                    .description-section h2 {{
-                        color: #383d41;
-                        font-size: 22px;
-                        margin-bottom: 20px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }}
-                    
-                    .description-content {{
-                        background: white;
-                        padding: 20px;
-                        border-radius: 8px;
-                        border: 1px solid #ced4da;
-                        font-size: 16px;
-                        line-height: 1.8;
-                        color: #495057;
-                    }}
-                    
-                    .action-section {{
-                        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-                        color: white;
-                        border-radius: 10px;
-                        padding: 30px;
-                        margin-bottom: 35px;
-                        text-align: center;
-                    }}
-                    
-                    .action-section h2 {{
-                        font-size: 24px;
-                        margin-bottom: 25px;
-                        font-weight: 600;
-                    }}
-                    
-                    .action-steps {{
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                        gap: 25px;
-                        margin-bottom: 30px;
-                    }}
-                    
-                    .step {{
-                        background: rgba(255, 255, 255, 0.1);
-                        padding: 20px;
-                        border-radius: 8px;
-                        text-align: center;
-                        backdrop-filter: blur(10px);
-                    }}
-                    
-                    .step-number {{
-                        background: white;
-                        color: #007bff;
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-weight: bold;
-                        font-size: 20px;
-                        margin: 0 auto 15px;
-                    }}
-                    
-                    .step-text {{
-                        font-size: 15px;
-                        opacity: 0.9;
-                    }}
-                    
-                    .dashboard-button {{
-                        display: inline-block;
-                        background: white;
-                        color: #007bff;
-                        padding: 18px 40px;
-                        text-decoration: none;
-                        border-radius: 8px;
-                        font-weight: 700;
-                        font-size: 18px;
-                        margin: 20px 0;
-                        text-align: center;
-                        transition: transform 0.3s, box-shadow 0.3s;
-                        border: none;
-                        cursor: pointer;
-                    }}
-                    
-                    .dashboard-button:hover {{
-                        transform: translateY(-3px);
-                        box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
-                    }}
-                    
-                    .footer {{
-                        background: #343a40;
-                        color: white;
-                        padding: 35px;
-                        text-align: center;
-                        border-top: 5px solid #007bff;
-                    }}
-                    
-                    .footer p {{
-                        margin-bottom: 12px;
-                        font-size: 15px;
-                        opacity: 0.9;
-                    }}
-                    
-                    .support-email {{
-                        color: #4dabf7;
-                        text-decoration: none;
-                        font-weight: 600;
-                        font-size: 16px;
-                    }}
-                    
-                    .timestamp {{
-                        background: rgba(255, 255, 255, 0.1);
-                        padding: 15px;
-                        border-radius: 6px;
-                        margin: 20px 0;
-                        font-size: 14px;
-                    }}
-                    
-                    .copyright {{
-                        margin-top: 30px;
-                        font-size: 13px;
-                        opacity: 0.7;
-                        border-top: 1px solid rgba(255, 255, 255, 0.1);
-                        padding-top: 20px;
-                    }}
-                    
-                    @media (max-width: 600px) {{
-                        .content, .header, .footer {{
-                            padding: 25px 20px;
-                        }}
-                        
-                        .header h1 {{
-                            font-size: 26px;
-                        }}
-                        
-                        .info-grid {{
-                            grid-template-columns: 1fr;
-                        }}
-                        
-                        .action-steps {{
-                            grid-template-columns: 1fr;
-                        }}
-                        
-                        .dashboard-button {{
-                            padding: 16px 30px;
-                            font-size: 16px;
-                        }}
-                    }}
-                </style>
-            </head>
-            <body>
-                <div class="email-container">
-                    <div class="header">
-                        <h1>🚗 New Service Request Received!</h1>
-                        <p>A customer has submitted a new service request to your garage</p>
-                        {f"<div class='urgent-badge'>⚠️ URGENT EMERGENCY REQUEST</div>" if context['is_emergency'] == 'YES - URGENT' else ''}
+    def get_confirmation_html(self, context):
+        """Embedded HTML template for confirmation email"""
+        return f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Service Request Confirmation</title>
+            <style>
+                body {{
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background-color: #f0f9ff;
+                }}
+                .header {{
+                    background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+                    color: white;
+                    padding: 30px 20px;
+                    text-align: center;
+                    border-radius: 15px 15px 0 0;
+                }}
+                .header h1 {{
+                    margin: 0;
+                    font-size: 28px;
+                }}
+                .header p {{
+                    margin: 10px 0 0;
+                    opacity: 0.9;
+                }}
+                .content {{
+                    background-color: white;
+                    padding: 30px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 0 0 15px 15px;
+                }}
+                .status-badge {{
+                    display: inline-block;
+                    background-color: #f59e0b;
+                    color: white;
+                    padding: 5px 15px;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    font-weight: bold;
+                }}
+                .info-box {{
+                    background-color: #f8fafc;
+                    padding: 15px;
+                    border-radius: 10px;
+                    margin: 20px 0;
+                    border-left: 4px solid #0891b2;
+                }}
+                .info-item {{
+                    margin: 10px 0;
+                    display: flex;
+                    align-items: flex-start;
+                }}
+                .info-label {{
+                    font-weight: bold;
+                    width: 120px;
+                    color: #475569;
+                }}
+                .info-value {{
+                    flex: 1;
+                    color: #0f172a;
+                }}
+                .footer {{
+                    text-align: center;
+                    margin-top: 30px;
+                    padding-top: 20px;
+                    border-top: 1px solid #e2e8f0;
+                    font-size: 12px;
+                    color: #64748b;
+                }}
+                .button {{
+                    background-color: #0891b2;
+                    color: white;
+                    padding: 12px 30px;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    display: inline-block;
+                    margin: 20px 0;
+                }}
+                .logo {{
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <div class="logo">🔧 QuickFix Automotive</div>
+                <h1>Service Request Confirmation</h1>
+                <p>Thank you for choosing us!</p>
+            </div>
+            <div class="content">
+                <p>Dear <strong>{context['customer_name']}</strong>,</p>
+                
+                <p>Your service request has been successfully submitted. Our team will review it and assign a garage to assist you promptly.</p>
+                
+                <div class="info-box">
+                    <h3 style="margin-top: 0; color: #0891b2;">📋 Request Details</h3>
+                    <div class="info-item">
+                        <span class="info-label">Request ID:</span>
+                        <span class="info-value"><strong>{context['request_id']}</strong></span>
                     </div>
-                    
-                    <div class="content">
-                        <p class="greeting">Hello <strong>{context['garage_name']}</strong> Team,</p>
-                        
-                        <div class="request-id-section">
-                            <div class="request-id-title">REQUEST IDENTIFICATION NUMBER</div>
-                            <div class="request-id-value">{context['request_id']}</div>
-                            <div style="color: #6c757d; font-size: 14px;">Use this ID for all communications</div>
-                        </div>
-                        
-                        <div class="customer-section">
-                            <h2>👤 Customer Information</h2>
-                            <div class="info-grid">
-                                <div class="info-card">
-                                    <div class="info-label">Customer Name</div>
-                                    <div class="info-value">{context['customer_name']}</div>
-                                </div>
-                                <div class="info-card">
-                                    <div class="info-label">Email Address</div>
-                                    <div class="info-value">{context['customer_email']}</div>
-                                </div>
-                                <div class="info-card">
-                                    <div class="info-label">Phone Number</div>
-                                    <div class="info-value">{context['customer_phone']}</div>
-                                </div>
-                                <div class="info-card">
-                                    <div class="info-label">Location</div>
-                                    <div class="info-value">{context['location']}</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="vehicle-section">
-                            <h2>🚙 Vehicle Details</h2>
-                            <div class="info-grid">
-                                <div class="info-card">
-                                    <div class="info-label">Service Type</div>
-                                    <div class="info-value">{context['service_type']}</div>
-                                </div>
-                                <div class="info-card">
-                                    <div class="info-label">Vehicle</div>
-                                    <div class="info-value">{context['vehicle_info'] or 'Not specified'}</div>
-                                </div>
-                                <div class="info-card">
-                                    <div class="info-label">Priority Level</div>
-                                    <div class="info-value">{context['priority']}</div>
-                                </div>
-                                <div class="info-card">
-                                    <div class="info-label">Emergency Status</div>
-                                    <div class="info-value">{context['is_emergency']}</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="description-section">
-                            <h2>📝 Problem Description</h2>
-                            <div class="description-content">
-                                {context['experience']}
-                            </div>
-                        </div>
-                        
-                        <div class="action-section">
-                            <h2>⏰ Required Actions</h2>
-                            <div class="action-steps">
-                                <div class="step">
-                                    <div class="step-number">1</div>
-                                    <div class="step-text">Review request details carefully</div>
-                                </div>
-                                <div class="step">
-                                    <div class="step-number">2</div>
-                                    <div class="step-text">Contact customer within 24 hours</div>
-                                </div>
-                                <div class="step">
-                                    <div class="step-number">3</div>
-                                    <div class="step-text">Schedule diagnosis appointment</div>
-                                </div>
-                                <div class="step">
-                                    <div class="step-number">4</div>
-                                    <div class="step-text">Update status in the dashboard</div>
-                                </div>
-                            </div>
-                            
-                            <a href="{context['admin_dashboard_url']}/requests/{service_request.request_id}" class="dashboard-button">
-                                📊 Go to Dashboard
-                            </a>
-                            <p style="opacity: 0.9; margin-top: 15px; font-size: 14px;">
-                                Click above to view complete details and manage this request
-                            </p>
-                        </div>
-                        
-                        <div class="timestamp">
-                            <strong>📅 Submission Time:</strong> {context['submitted_date']} at {context['submitted_time']}
-                        </div>
+                    <div class="info-item">
+                        <span class="info-label">Service Type:</span>
+                        <span class="info-value">{context['service_type']}</span>
                     </div>
-                    
-                    <div class="footer">
-                        <div class="timestamp">
-                            <strong>⚠️ Important:</strong> Please respond to this request within 24 hours
-                        </div>
-                        
-                        <p>Need technical support with the dashboard?</p>
-                        <p>Contact: <a href="mailto:{context['support_email']}" class="support-email">{context['support_email']}</a></p>
-                        
-                        <div style="margin-top: 30px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.15);">
-                            <p style="font-size: 16px; margin-bottom: 5px;">Best regards,</p>
-                            <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">Service Request Management System</p>
-                            <p style="font-size: 14px; opacity: 0.8;">Automated Notification System</p>
-                        </div>
-                        
-                        <p class="copyright">
-                            © {context['current_year']} Auto Service Platform. All rights reserved.<br>
-                            This is an automated notification. Please do not reply to this email.
-                        </p>
+                    <div class="info-item">
+                        <span class="info-label">Location:</span>
+                        <span class="info-value">{context['location']}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Submitted:</span>
+                        <span class="info-value">{context['submitted_date']}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Status:</span>
+                        <span class="info-value"><span class="status-badge">Pending Review</span></span>
                     </div>
                 </div>
-            </body>
-            </html>
-            """
-            
-            # Send email to GARAGE ONLY
-            email = EmailMultiAlternatives(
-                subject=subject,
-                body=plain_message,
-                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@autoservice.com'),
-                to=[garage_email],
-                cc=[getattr(settings, 'ADMIN_EMAIL', 'admin@autoservice.com')] if hasattr(settings, 'ADMIN_EMAIL') else None,
-            )
-            email.attach_alternative(html_message, "text/html")
-            email.send(fail_silently=False)
-            
-            logger.info(f"Garage notification email sent to {garage_email} for request {context['request_id']}")
-            
-        except Exception as e:
-            logger.error(f"Failed to send garage notification email: {str(e)}")
-            # Don't fail the request if email fails
+                
+                <div class="info-box">
+                    <h3 style="margin-top: 0; color: #0891b2;">🛠️ Issue Description</h3>
+                    <p>{context['experience']}...</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="{context['tracking_url']}" class="button">Track Your Request</a>
+                </div>
+                
+                <p><strong>What happens next?</strong></p>
+                <ul>
+                    <li>✅ Our team will review your request</li>
+                    <li>✅ A qualified garage will be assigned</li>
+                    <li>✅ You'll receive status updates via email</li>
+                    <li>✅ You'll get a quote before any work begins</li>
+                </ul>
+                
+                <p>For urgent assistance, please call our support team.</p>
+                
+                <p>Best regards,<br>
+                <strong>QuickFix Automotive Team</strong></p>
+            </div>
+            <div class="footer">
+                <p>&copy; {context['current_year']} QuickFix Automotive. All rights reserved.</p>
+                <p>Professional garage services at your doorstep</p>
+            </div>
+        </body>
+        </html>
+        """
     
-    @action(detail=True, methods=['post', 'put'])
-    def update_status(self, request, pk=None):
+    def get_status_update_html(self, context):
+        """Embedded HTML template for status update email"""
+        # Status colors
+        status_colors = {
+            'received': '#3b82f6',
+            'in_progress': '#8b5cf6',
+            'completed': '#10b981',
+            'cancelled': '#64748b',
+            'rejected': '#ef4444'
+        }
+        status_color = status_colors.get(context['new_status'].lower(), '#0891b2')
+        
+        # Status icons
+        status_icons = {
+            'received': '📥',
+            'in_progress': '🔧',
+            'completed': '✅',
+            'cancelled': '❌',
+            'rejected': '⚠️'
+        }
+        status_icon = status_icons.get(context['new_status'].lower(), '📋')
+        
+        return f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Service Request Status Update</title>
+            <style>
+                body {{
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background-color: #f0f9ff;
+                }}
+                .header {{
+                    background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+                    color: white;
+                    padding: 30px 20px;
+                    text-align: center;
+                    border-radius: 15px 15px 0 0;
+                }}
+                .header h1 {{
+                    margin: 0;
+                    font-size: 28px;
+                }}
+                .content {{
+                    background-color: white;
+                    padding: 30px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 0 0 15px 15px;
+                }}
+                .status-card {{
+                    background: linear-gradient(135deg, {status_color}15 0%, {status_color}05 100%);
+                    border: 2px solid {status_color};
+                    border-radius: 15px;
+                    padding: 20px;
+                    text-align: center;
+                    margin: 20px 0;
+                }}
+                .status-icon {{
+                    font-size: 48px;
+                    margin-bottom: 10px;
+                }}
+                .status-text {{
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: {status_color};
+                    margin: 10px 0;
+                }}
+                .info-box {{
+                    background-color: #f8fafc;
+                    padding: 15px;
+                    border-radius: 10px;
+                    margin: 20px 0;
+                    border-left: 4px solid {status_color};
+                }}
+                .info-item {{
+                    margin: 10px 0;
+                    display: flex;
+                    align-items: center;
+                }}
+                .info-label {{
+                    font-weight: bold;
+                    width: 120px;
+                    color: #475569;
+                }}
+                .info-value {{
+                    flex: 1;
+                    color: #0f172a;
+                }}
+                .progress-bar {{
+                    background-color: #e2e8f0;
+                    border-radius: 10px;
+                    height: 8px;
+                    margin: 20px 0;
+                    overflow: hidden;
+                }}
+                .progress-fill {{
+                    background-color: {status_color};
+                    height: 100%;
+                    width: {context.get('progress_percentage', 50)}%;
+                    border-radius: 10px;
+                }}
+                .footer {{
+                    text-align: center;
+                    margin-top: 30px;
+                    padding-top: 20px;
+                    border-top: 1px solid #e2e8f0;
+                    font-size: 12px;
+                    color: #64748b;
+                }}
+                .button {{
+                    background-color: {status_color};
+                    color: white;
+                    padding: 12px 30px;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    display: inline-block;
+                    margin: 20px 0;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>{status_icon} Service Request Status Update</h1>
+                <p>Your request has been updated</p>
+            </div>
+            <div class="content">
+                <p>Dear <strong>{context['customer_name']}</strong>,</p>
+                
+                <div class="status-card">
+                    <div class="status-icon">{status_icon}</div>
+                    <div class="status-text">{context['new_status'].upper()}</div>
+                    <p>Your service request status has been updated</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3 style="margin-top: 0;">📋 Request Information</h3>
+                    <div class="info-item">
+                        <span class="info-label">Request ID:</span>
+                        <span class="info-value"><strong>{context['request_id']}</strong></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Service Type:</span>
+                        <span class="info-value">{context['service_type']}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Previous Status:</span>
+                        <span class="info-value">{context['old_status']}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Current Status:</span>
+                        <span class="info-value"><strong style="color: {status_color};">{context['new_status']}</strong></span>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3 style="margin-top: 0;">🏢 Garage Information</h3>
+                    <div class="info-item">
+                        <span class="info-label">Assigned Garage:</span>
+                        <span class="info-value">{context['garage_name']}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Location:</span>
+                        <span class="info-value">{context['location']}</span>
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="{context['tracking_url']}" class="button">Track Your Request</a>
+                </div>
+                
+                <div style="background-color: #e0f2fe; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                    <p style="margin: 0; color: #0891b2;">
+                        <strong>💡 Need help?</strong><br>
+                        Contact our support team for assistance.
+                    </p>
+                </div>
+                
+                <p>Best regards,<br>
+                <strong>QuickFix Automotive Team</strong></p>
+            </div>
+            <div class="footer">
+                <p>&copy; {context['current_year']} QuickFix Automotive. All rights reserved.</p>
+                <p>Professional garage services at your doorstep</p>
+            </div>
+        </body>
+        </html>
         """
-        Update status of a service request
-        Send email to REQUEST SENDER (customer) about the update
-        """
-        service_request = self.get_object()
-        
-        serializer = UpdateServiceRequestStatusSerializer(
-            data=request.data,
-            context={'request': request}
-        )
-        
-        if serializer.is_valid():
-            # Store old status
-            old_status = service_request.status
-            old_status_display = service_request.get_status_display()
-            
-            # Update service request
-            service_request = serializer.update(service_request, serializer.validated_data)
-            
-            # Send status update email to REQUEST SENDER (customer)
-            self.send_status_update_email_to_customer(
-                service_request=service_request,
-                old_status=old_status,
-                old_status_display=old_status_display,
-                new_status=service_request.status,
-                new_status_display=service_request.get_status_display(),
-                notes=serializer.validated_data.get('notes', '')
-            )
-            
-            return Response({
-                'success': True,
-                'message': f'Status updated from {old_status_display} to {service_request.get_status_display()}',
-                'status': service_request.status,
-                'status_display': service_request.get_status_display(),
-                'updated_at': service_request.updated_at
-            })
-        
-        return Response({
-            'success': False,
-            'error': 'Validation failed',
-            'details': serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
     
-    def send_status_update_email_to_customer(self, service_request, old_status, old_status_display, 
-                                          new_status, new_status_display, notes):
-        """
-        Send status update email to REQUEST SENDER (customer)
-        Customer receives email when their request is updated
-        """
-        customer_email = service_request.email
-        if not customer_email:
-            logger.warning(f"No customer email found for request {service_request.request_id}")
-            return
-        
+    def send_confirmation_email(self, service_request):
+        """Send confirmation email when service request is created"""
         try:
-            # Get status icon based on status
-            status_icons = {
-                'pending': '⏳',
-                'received': '📥',
-                'in_progress': '🔧',
-                'completed': '✅',
-                'cancelled': '❌',
-                'rejected': '🚫',
-            }
-            
-            status_icon = status_icons.get(new_status, '📋')
-            
-            # Get garage info
-            garage_name = service_request.garage.name if service_request.garage else "Service Garage"
-            garage_email = service_request.garage.email if service_request.garage else None
-            garage_phone = service_request.garage.phone if service_request.garage else None
+            if not service_request.email:
+                logger.warning(f"No email for customer {service_request.full_name()}")
+                return False
             
             context = {
-                'request_id': str(service_request.request_id)[:8].upper(),
                 'customer_name': service_request.full_name(),
-                'old_status': old_status_display,
-                'new_status': new_status_display,
-                'new_status_icon': status_icon,
-                'notes': notes,
-                'garage_name': garage_name,
-                'garage_email': garage_email,
-                'garage_phone': garage_phone,
-                'updated_date': timezone.now().strftime('%B %d, %Y at %I:%M %p'),
-                'service_type': service_request.service_type or 'Vehicle Service',
-                'vehicle_info': f"{service_request.vehicle_year} {service_request.vehicle_make} {service_request.vehicle_model}".strip(),
-                'support_email': getattr(settings, 'DEFAULT_FROM_EMAIL', 'support@example.com'),
-                'customer_portal_url': getattr(settings, 'CUSTOMER_PORTAL_URL', 'https://customer.yourapp.com'),
-                'current_year': timezone.now().year,
+                'request_id': service_request.get_request_code(),
+                'service_type': service_request.service_type or 'General Service',
+                'location': service_request.location or 'Not specified',
+                'experience': service_request.experience[:200] if service_request.experience else '',
+                'submitted_date': service_request.submitted_at.strftime('%B %d, %Y at %I:%M %p') if service_request.submitted_at else 'N/A',
+                'tracking_url': f"{getattr(settings, 'BASE_URL', 'https://autofix.pythonanywhere.com')}/track-request/{service_request.request_id}",
+                'current_year': timezone.now().year
             }
             
-            subject = f"📋 Update: Your Service Request #{context['request_id']} - Now {new_status_display}"
-            
-            # Create plain text message
+            html_message = self.get_confirmation_html(context)
             plain_message = f"""
-            SERVICE REQUEST STATUS UPDATE
-            ==============================
+            QuickFix Automotive - Service Request Confirmation
+            
+            Dear {context['customer_name']},
+            
+            Your service request has been successfully submitted.
+            
+            Request ID: {context['request_id']}
+            Service Type: {context['service_type']}
+            Location: {context['location']}
+            Submitted: {context['submitted_date']}
+            
+            Track your request: {context['tracking_url']}
+            
+            Best regards,
+            QuickFix Automotive Team
+            """
+            
+            send_mail(
+                subject=f"✅ Service Request Confirmation - {context['request_id']}",
+                message=plain_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[service_request.email],
+                html_message=html_message,
+                fail_silently=False
+            )
+            
+            logger.info(f"Confirmation email sent to {service_request.email}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to send confirmation email: {str(e)}")
+            return False
+    
+    def send_status_notification(self, service_request, old_status, new_status):
+        """Send email notification to customer when status changes"""
+        try:
+            if not service_request.email:
+                logger.warning(f"No email for customer {service_request.full_name()}")
+                return False
+            
+            # Status display names
+            status_display = {
+                'pending': 'Pending',
+                'received': 'Received by Garage',
+                'in_progress': 'In Progress',
+                'completed': 'Completed',
+                'cancelled': 'Cancelled',
+                'rejected': 'Rejected'
+            }
+            
+            # Progress percentages
+            progress_map = {
+                'pending': 0,
+                'received': 25,
+                'in_progress': 50,
+                'completed': 100,
+                'cancelled': 0,
+                'rejected': 0
+            }
+            
+            context = {
+                'customer_name': service_request.full_name(),
+                'request_id': service_request.get_request_code(),
+                'old_status': status_display.get(old_status, old_status),
+                'new_status': status_display.get(new_status, new_status),
+                'service_type': service_request.service_type or 'General Service',
+                'garage_name': service_request.garage_name or 'To be assigned',
+                'location': service_request.location or 'Not specified',
+                'tracking_url': f"{getattr(settings, 'BASE_URL', 'https://autofix.pythonanywhere.com')}/track-request/{service_request.request_id}",
+                'current_year': timezone.now().year,
+                'progress_percentage': progress_map.get(new_status, 50)
+            }
+            
+            # Subject based on new status
+            subjects = {
+                'received': f"✅ Service Request Received - {context['request_id']}",
+                'in_progress': f"🔧 Service In Progress - {context['request_id']}",
+                'completed': f"🎉 Service Completed - {context['request_id']}",
+                'cancelled': f"❌ Service Cancelled - {context['request_id']}",
+                'rejected': f"⚠️ Service Update - {context['request_id']}"
+            }
+            
+            subject = subjects.get(new_status, f"📋 Status Update - {context['request_id']}")
+            
+            html_message = self.get_status_update_html(context)
+            plain_message = f"""
+            QuickFix Automotive - Service Request Status Update
             
             Dear {context['customer_name']},
             
             Your service request status has been updated.
             
-            REQUEST DETAILS:
-            ----------------
             Request ID: {context['request_id']}
-            Service Type: {context['service_type']}
-            Vehicle: {context['vehicle_info']}
             Previous Status: {context['old_status']}
-            New Status: {context['new_status']}
-            Updated: {context['updated_date']}
-            
-            SERVICE GARAGE:
-            --------------
+            Current Status: {context['new_status']}
             Garage: {context['garage_name']}
-            {f"Email: {context['garage_email']}" if context['garage_email'] else ""}
-            {f"Phone: {context['garage_phone']}" if context['garage_phone'] else ""}
             
-            {f"GARAGE NOTES:\n{context['notes']}" if context['notes'] else ""}
+            Track your request: {context['tracking_url']}
             
-            VIEW YOUR REQUEST:
-            ------------------
-            {context['customer_portal_url']}/requests/{service_request.request_id}
-            
-            Need assistance?
-            Contact support: {context['support_email']}
-            
-            Thank you for choosing our service,
-            Service Request Team
+            Best regards,
+            QuickFix Automotive Team
             """
             
-            # Create HTML version
-            html_message = f"""
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>{subject}</title>
-                <style>
-                    * {{
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
-                    }}
-                    
-                    body {{
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        line-height: 1.6;
-                        color: #333;
-                        background-color: #f7f9fc;
-                    }}
-                    
-                    .email-container {{
-                        max-width: 650px;
-                        margin: 0 auto;
-                        background: #ffffff;
-                        border-radius: 12px;
-                        overflow: hidden;
-                        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-                    }}
-                    
-                    .header {{
-                        background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
-                        color: white;
-                        padding: 40px 35px;
-                        text-align: center;
-                    }}
-                    
-                    .header h1 {{
-                        font-size: 28px;
-                        font-weight: 700;
-                        margin-bottom: 10px;
-                    }}
-                    
-                    .header p {{
-                        font-size: 16px;
-                        opacity: 0.95;
-                        font-weight: 400;
-                    }}
-                    
-                    .content {{
-                        padding: 45px 35px;
-                    }}
-                    
-                    .greeting {{
-                        font-size: 20px;
-                        margin-bottom: 30px;
-                        color: #444;
-                        font-weight: 500;
-                    }}
-                    
-                    .status-card {{
-                        background: #e8f5e9;
-                        border-radius: 10px;
-                        padding: 25px;
-                        margin: 25px 0;
-                        text-align: center;
-                        border: 2px solid #4CAF50;
-                    }}
-                    
-                    .status-icon {{
-                        font-size: 48px;
-                        margin-bottom: 15px;
-                    }}
-                    
-                    .status-title {{
-                        font-size: 24px;
-                        font-weight: bold;
-                        color: #2E7D32;
-                        margin-bottom: 10px;
-                    }}
-                    
-                    .status-change {{
-                        font-size: 18px;
-                        color: #333;
-                        margin-bottom: 15px;
-                    }}
-                    
-                    .info-grid {{
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                        gap: 20px;
-                        margin: 30px 0;
-                    }}
-                    
-                    .info-card {{
-                        background: #f5f5f5;
-                        padding: 20px;
-                        border-radius: 8px;
-                        border-left: 4px solid #4CAF50;
-                    }}
-                    
-                    .info-label {{
-                        font-size: 14px;
-                        color: #666;
-                        font-weight: 600;
-                        margin-bottom: 8px;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                    }}
-                    
-                    .info-value {{
-                        font-size: 18px;
-                        color: #333;
-                        font-weight: 500;
-                    }}
-                    
-                    .garage-info {{
-                        background: #fff3cd;
-                        border-radius: 10px;
-                        padding: 25px;
-                        margin: 30px 0;
-                        border: 2px solid #ffc107;
-                    }}
-                    
-                    .garage-info h2 {{
-                        color: #856404;
-                        font-size: 20px;
-                        margin-bottom: 20px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }}
-                    
-                    .notes-section {{
-                        background: #e3f2fd;
-                        border-radius: 10px;
-                        padding: 25px;
-                        margin: 30px 0;
-                        border: 2px solid #2196F3;
-                    }}
-                    
-                    .notes-section h2 {{
-                        color: #1565c0;
-                        font-size: 20px;
-                        margin-bottom: 15px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }}
-                    
-                    .notes-content {{
-                        background: white;
-                        padding: 20px;
-                        border-radius: 8px;
-                        border: 1px solid #bbdefb;
-                        font-size: 16px;
-                        line-height: 1.8;
-                        color: #424242;
-                    }}
-                    
-                    .dashboard-button {{
-                        display: inline-block;
-                        background: #4CAF50;
-                        color: white;
-                        padding: 18px 40px;
-                        text-decoration: none;
-                        border-radius: 8px;
-                        font-weight: 700;
-                        font-size: 18px;
-                        margin: 25px 0;
-                        text-align: center;
-                        transition: transform 0.3s, box-shadow 0.3s;
-                        border: none;
-                        cursor: pointer;
-                    }}
-                    
-                    .dashboard-button:hover {{
-                        transform: translateY(-3px);
-                        box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
-                    }}
-                    
-                    .footer {{
-                        background: #37474F;
-                        color: white;
-                        padding: 35px;
-                        text-align: center;
-                        border-top: 5px solid #4CAF50;
-                    }}
-                    
-                    .support-contact {{
-                        background: rgba(255, 255, 255, 0.1);
-                        padding: 20px;
-                        border-radius: 8px;
-                        margin: 20px 0;
-                    }}
-                    
-                    .support-email {{
-                        color: #4dabf7;
-                        text-decoration: none;
-                        font-weight: 600;
-                        font-size: 16px;
-                    }}
-                    
-                    .timestamp {{
-                        background: rgba(255, 255, 255, 0.1);
-                        padding: 15px;
-                        border-radius: 6px;
-                        margin: 20px 0;
-                        font-size: 14px;
-                    }}
-                    
-                    .copyright {{
-                        margin-top: 30px;
-                        font-size: 13px;
-                        opacity: 0.7;
-                        border-top: 1px solid rgba(255, 255, 255, 0.1);
-                        padding-top: 20px;
-                    }}
-                    
-                    @media (max-width: 600px) {{
-                        .content, .header, .footer {{
-                            padding: 25px 20px;
-                        }}
-                        
-                        .header h1 {{
-                            font-size: 24px;
-                        }}
-                        
-                        .info-grid {{
-                            grid-template-columns: 1fr;
-                        }}
-                        
-                        .dashboard-button {{
-                            padding: 16px 30px;
-                            font-size: 16px;
-                        }}
-                    }}
-                </style>
-            </head>
-            <body>
-                <div class="email-container">
-                    <div class="header">
-                        <h1>{context['new_status_icon']} Service Request Updated</h1>
-                        <p>Your service request status has been changed</p>
-                    </div>
-                    
-                    <div class="content">
-                        <p class="greeting">Dear <strong>{context['customer_name']}</strong>,</p>
-                        
-                        <div class="status-card">
-                            <div class="status-icon">{context['new_status_icon']}</div>
-                            <div class="status-title">Current Status: {context['new_status']}</div>
-                            <div class="status-change">
-                                Changed from: <strong>{context['old_status']}</strong>
-                            </div>
-                            <div style="margin-top: 10px; color: #555;">
-                                Updated on: {context['updated_date']}
-                            </div>
-                        </div>
-                        
-                        <div class="info-grid">
-                            <div class="info-card">
-                                <div class="info-label">Request ID</div>
-                                <div class="info-value">{context['request_id']}</div>
-                            </div>
-                            <div class="info-card">
-                                <div class="info-label">Service Type</div>
-                                <div class="info-value">{context['service_type']}</div>
-                            </div>
-                            <div class="info-card">
-                                <div class="info-label">Vehicle</div>
-                                <div class="info-value">{context['vehicle_info'] or 'Not specified'}</div>
-                            </div>
-                            <div class="info-card">
-                                <div class="info-label">Updated On</div>
-                                <div class="info-value">{context['updated_date']}</div>
-                            </div>
-                        </div>
-                        
-                        <div class="garage-info">
-                            <h2>🏢 Servicing Garage</h2>
-                            <div class="info-grid">
-                                <div class="info-card">
-                                    <div class="info-label">Garage Name</div>
-                                    <div class="info-value">{context['garage_name']}</div>
-                                </div>
-                                {f'''
-                                <div class="info-card">
-                                    <div class="info-label">Garage Email</div>
-                                    <div class="info-value">{context['garage_email']}</div>
-                                </div>
-                                ''' if context['garage_email'] else ''}
-                                {f'''
-                                <div class="info-card">
-                                    <div class="info-label">Garage Phone</div>
-                                    <div class="info-value">{context['garage_phone']}</div>
-                                </div>
-                                ''' if context['garage_phone'] else ''}
-                            </div>
-                        </div>
-                        
-                        {f'''
-                        <div class="notes-section">
-                            <h2>📝 Garage Notes</h2>
-                            <div class="notes-content">
-                                {context['notes']}
-                            </div>
-                        </div>
-                        ''' if context['notes'] else ''}
-                        
-                        <div style="text-align: center; margin: 40px 0;">
-                            <a href="{context['customer_portal_url']}/requests/{service_request.request_id}" class="dashboard-button">
-                                📋 View Your Request
-                            </a>
-                            <p style="color: #666; margin-top: 15px; font-size: 14px;">
-                                Click above to view complete details and track progress
-                            </p>
-                        </div>
-                        
-                        <div class="timestamp">
-                            <strong>📅 Update Time:</strong> {context['updated_date']}
-                        </div>
-                    </div>
-                    
-                    <div class="footer">
-                        <div class="support-contact">
-                            <p style="margin-bottom: 10px;">Need assistance or have questions?</p>
-                            <p>Contact our support team: <a href="mailto:{context['support_email']}" class="support-email">{context['support_email']}</a></p>
-                        </div>
-                        
-                        <div class="timestamp">
-                            <strong>ℹ️ Note:</strong> This is an automated notification. Please do not reply to this email.
-                        </div>
-                        
-                        <div style="margin-top: 30px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.15);">
-                            <p style="font-size: 16px; margin-bottom: 5px;">Best regards,</p>
-                            <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">Service Request Management Team</p>
-                        </div>
-                        
-                        <p class="copyright">
-                            © {context['current_year']} Auto Service Platform. All rights reserved.<br>
-                            This email was sent to {customer_email}
-                        </p>
-                    </div>
-                </div>
-            </body>
-            </html>
-            """
-            
-            # Send email to REQUEST SENDER (customer)
-            email = EmailMultiAlternatives(
+            send_mail(
                 subject=subject,
-                body=plain_message,
-                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@autoservice.com'),
-                to=[customer_email],
+                message=plain_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[service_request.email],
+                html_message=html_message,
+                fail_silently=False
             )
-            email.attach_alternative(html_message, "text/html")
-            email.send(fail_silently=True)
             
-            logger.info(f"Status update email sent to customer {customer_email} for request {context['request_id']}")
+            logger.info(f"Status notification email sent to {service_request.email}")
+            return True
             
         except Exception as e:
-            logger.error(f"Failed to send status update email to customer: {str(e)}")
+            logger.error(f"Failed to send status notification email: {str(e)}")
+            return False
     
-    @action(detail=False, methods=['get'])
-    def my_requests(self, request):
-        """
-        Get all service requests for the authenticated user
-        """
-        if not request.user.is_authenticated:
-            return Response(
-                {'error': 'Authentication required'},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
-        
-        queryset = ServiceRequest.objects.filter(user=request.user)
-        queryset = self.apply_filters(queryset)
-        
-        # Get counts for dashboard
-        counts = {
-            'total': queryset.count(),
-            'pending': queryset.filter(status='pending').count(),
-            'in_progress': queryset.filter(status='in_progress').count(),
-            'completed': queryset.filter(status='completed').count(),
-            'cancelled': queryset.filter(status='cancelled').count(),
-        }
-        
-        # Paginate results
-        page = self.paginate_queryset(queryset.order_by('-created_at'))
-        if page is not None:
-            serializer = ServiceRequestListSerializer(page, many=True, context={'request': request})
-            return self.get_paginated_response({
-                'counts': counts,
-                'requests': serializer.data
-            })
-        
-        serializer = ServiceRequestListSerializer(queryset, many=True, context={'request': request})
-        return Response({
-            'counts': counts,
-            'requests': serializer.data
-        })
+    def create(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            
+            if serializer.is_valid():
+                service_request = serializer.save(
+                    ip_address=self.get_client_ip(request),
+                    user_agent=request.META.get('HTTP_USER_AGENT', ''),
+                    submitted_at=timezone.now()
+                )
+                
+                response_serializer = ServiceRequestDetailSerializer(service_request)
+                
+                # Send confirmation email
+                self.send_confirmation_email(service_request)
+                
+                return Response({
+                    'success': True,
+                    'message': 'Service request created successfully',
+                    'data': response_serializer.data,
+                    'request_code': service_request.get_request_code()
+                }, status=status.HTTP_201_CREATED)
+            
+            return Response({
+                'success': False,
+                'errors': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
+        except Exception as e:
+            logger.error(f"Error in create: {str(e)}")
+            return Response({
+                'success': False,
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
-    @action(detail=True, methods=['post'])
-    def add_attachment(self, request, pk=None):
-        """Add attachment to service request"""
-        service_request = self.get_object()
-        
-        serializer = ServiceRequestAttachmentSerializer(
-            data=request.data,
-            context={'request': request}
-        )
-        
-        if serializer.is_valid():
-            attachment = serializer.save(
-                service_request=service_request,
-                uploaded_by=request.user if request.user.is_authenticated else None
-            )
+    @action(detail=True, methods=['post'], url_path='change-status')
+    @method_decorator(csrf_exempt)
+    def change_status(self, request, pk=None):
+        """
+        Change status of service request and send email notification to customer
+        URL: POST /api/service-requests/{id}/change-status/
+        Body: {"status": "in_progress"}
+        """
+        try:
+            # Validate that pk is a number
+            try:
+                request_id = int(pk)
+            except (ValueError, TypeError):
+                return Response({
+                    'success': False,
+                    'error': f'Invalid request ID: {pk}. ID must be a number.'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Get the service request
+            try:
+                service_request = ServiceRequest.objects.get(id=request_id)
+            except ServiceRequest.DoesNotExist:
+                return Response({
+                    'success': False,
+                    'error': f'Service request with ID {request_id} not found'
+                }, status=status.HTTP_404_NOT_FOUND)
+            
+            # Get the new status from request
+            new_status = None
+            if request.body:
+                try:
+                    body = json.loads(request.body)
+                    new_status = body.get('status')
+                except:
+                    pass
+            
+            if not new_status:
+                new_status = request.data.get('status')
+            
+            logger.info(f"Status update request for request {request_id}: {new_status}")
+            
+            # Validate status is provided
+            if not new_status:
+                return Response({
+                    'success': False,
+                    'error': 'Status is required'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Valid status values
+            valid_statuses = ['pending', 'received', 'in_progress', 'completed', 'cancelled', 'rejected']
+            
+            # Validate status is valid
+            if new_status not in valid_statuses:
+                return Response({
+                    'success': False,
+                    'error': f'Invalid status. Must be one of: {", ".join(valid_statuses)}'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Store old status
+            old_status = service_request.status
+            
+            # If status hasn't changed, return early
+            if old_status == new_status:
+                return Response({
+                    'success': True,
+                    'message': 'Status is already set to this value',
+                    'status': service_request.status,
+                    'request_id': service_request.id,
+                    'request_code': service_request.get_request_code()
+                }, status=status.HTTP_200_OK)
+            
+            # Update the status
+            service_request.status = new_status
+            service_request.save()
             
             # Create update record
             ServiceRequestUpdate.objects.create(
                 service_request=service_request,
-                updated_by=request.user if request.user.is_authenticated else None,
-                update_type='note_added',
-                old_value='',
-                new_value='Attachment added',
-                notes=f'Added {attachment.file_type} attachment'
+                update_type='status_change',
+                old_value=old_status,
+                new_value=new_status,
+                notes=f'Status changed from {old_status} to {new_status}'
             )
             
-            return Response(
-                ServiceRequestAttachmentSerializer(attachment).data,
-                status=status.HTTP_201_CREATED
-            )
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    @action(detail=True, methods=['post'])
-    def submit_feedback(self, request, pk=None):
-        """
-        Submit feedback and rating for completed service
-        """
-        service_request = self.get_object()
-        
-        # Check if service is completed
-        if service_request.status != 'completed':
-            return Response(
-                {'error': 'Feedback can only be submitted for completed requests'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        rating = request.data.get('rating')
-        feedback = request.data.get('feedback', '').strip()
-        
-        # Validate rating
-        if not rating or not 1 <= int(rating) <= 5:
-            return Response(
-                {'error': 'Rating must be a number between 1 and 5'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        # Update service request
-        service_request.user_rating = rating
-        service_request.user_feedback = feedback
-        service_request.save()
-        
-        # Update garage rating if applicable
-        if service_request.garage:
-            self.update_garage_rating(service_request.garage)
-        
-        # Create update record
-        ServiceRequestUpdate.objects.create(
-            service_request=service_request,
-            updated_by=request.user if request.user.is_authenticated else None,
-            update_type='note_added',
-            old_value='',
-            new_value='Feedback submitted',
-            notes=f'Service rated {rating}/5'
-        )
-        
-        return Response({
-            'success': True,
-            'message': 'Thank you for your feedback!',
-            'rating': rating,
-            'feedback': feedback
-        })
-    
-    def update_garage_rating(self, garage):
-        """Update garage's average rating"""
-        try:
-            ratings = garage.garage_service_requests.filter(
-                user_rating__isnull=False
-            ).values_list('user_rating', flat=True)
+            # SEND EMAIL NOTIFICATION TO CUSTOMER
+            email_sent = self.send_status_notification(service_request, old_status, new_status)
             
-            if ratings:
-                avg_rating = sum(ratings) / len(ratings)
-                garage.rating = round(avg_rating, 2)
-                garage.rating_count = len(ratings)
-                garage.save()
+            logger.info(f"Status changed for request {request_id}: {old_status} -> {new_status}")
+            
+            # Return success response with email status
+            return Response({
+                'success': True,
+                'message': f'Status changed from {old_status} to {new_status}',
+                'status': service_request.status,
+                'old_status': old_status,
+                'new_status': new_status,
+                'request_id': service_request.id,
+                'request_code': service_request.get_request_code(),
+                'email_notification_sent': email_sent,
+                'customer_email': service_request.email if service_request.email else 'No email on file'
+            }, status=status.HTTP_200_OK)
+            
         except Exception as e:
-            logger.error(f"Failed to update garage rating: {str(e)}")
+            logger.error(f"Error changing status: {str(e)}")
+            return Response({
+                'success': False,
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            return Response({
+                'success': True,
+                'count': queryset.count(),
+                'results': serializer.data
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(f"Error in list: {str(e)}")
+            return Response({
+                'success': False,
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            serializer = self.get_serializer(instance)
+            return Response({
+                'success': True,
+                'data': serializer.data
+            }, status=status.HTTP_200_OK)
+        except ServiceRequest.DoesNotExist:
+            return Response({
+                'success': False,
+                'error': 'Service request not found'
+            }, status=status.HTTP_404_NOT_FOUND)
     
     @action(detail=False, methods=['get'])
-    def statistics(self, request):
-        """
-        Get service request statistics
-        """
-        # Total statistics
-        total_requests = ServiceRequest.objects.count()
-        
-        # Status counts
-        status_counts = {}
-        for status_code, status_name in ServiceRequest.STATUS_CHOICES:
-            status_counts[status_code] = ServiceRequest.objects.filter(status=status_code).count()
-        
-        # Recent requests (last 30 days)
-        month_ago = timezone.now() - timedelta(days=30)
-        recent_requests = ServiceRequest.objects.filter(created_at__gte=month_ago).count()
-        
-        # Average rating
-        avg_rating = ServiceRequest.objects.filter(
-            user_rating__isnull=False
-        ).aggregate(Avg('user_rating'))['user_rating__avg']
-        
-        return Response({
-            'total_requests': total_requests,
-            'status_counts': status_counts,
-            'recent_requests_last_30_days': recent_requests,
-            'average_rating': round(avg_rating, 2) if avg_rating else None,
-            'timestamp': timezone.now().isoformat()
-        })
-    
-    @action(detail=False, methods=['get'])
-    def search(self, request):
-        """
-        Search service requests
-        """
-        query = request.query_params.get('q', '').strip()
-        
-        if not query or len(query) < 2:
-            return Response(
-                {'error': 'Search query must be at least 2 characters'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        # Search all fields
-        queryset = ServiceRequest.objects.filter(
-            Q(request_id__icontains=query) |
-            Q(first_name__icontains=query) |
-            Q(last_name__icontains=query) |
-            Q(email__icontains=query) |
-            Q(phone__icontains=query) |
-            Q(location__icontains=query)
-        )
-        
-        # Apply additional filters
-        queryset = self.apply_filters(queryset)
-        
-        # Paginate results
-        page = self.paginate_queryset(queryset.order_by('-created_at'))
-        if page is not None:
-            serializer = ServiceRequestListSerializer(page, many=True, context={'request': request})
-            return self.get_paginated_response(serializer.data)
-        
-        serializer = ServiceRequestListSerializer(queryset, many=True, context={'request': request})
-        return Response(serializer.data)
+    def stats(self, request):
+        """Get statistics"""
+        try:
+            queryset = ServiceRequest.objects.all()
+            
+            stats = {
+                'total': queryset.count(),
+                'pending': queryset.filter(status='pending').count(),
+                'received': queryset.filter(status='received').count(),
+                'in_progress': queryset.filter(status='in_progress').count(),
+                'completed': queryset.filter(status='completed').count(),
+                'cancelled': queryset.filter(status='cancelled').count(),
+                'rejected': queryset.filter(status='rejected').count(),
+                'urgent': queryset.filter(priority='urgent').count(),
+                'high_priority': queryset.filter(priority='high').count(),
+                'medium_priority': queryset.filter(priority='medium').count(),
+                'low_priority': queryset.filter(priority='low').count(),
+                'emergency': queryset.filter(is_emergency=True).count(),
+                'avg_rating': queryset.filter(user_rating__isnull=False).aggregate(models.Avg('user_rating'))['user_rating__avg'] or 0,
+                'today_requests': queryset.filter(created_at__date=timezone.now().date()).count(),
+                'this_week_requests': queryset.filter(
+                    created_at__gte=timezone.now() - timezone.timedelta(days=7)
+                ).count(),
+            }
+            
+            return Response(stats, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(f"Error in stats: {str(e)}")
+            return Response({
+                'success': False,
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class ServiceRequestUpdateViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    ViewSet for viewing service request updates
-    Anyone can view updates
-    """
-    serializer_class = ServiceRequestUpdateSerializer
+class ServiceTypeViewSet(viewsets.ModelViewSet):
+    queryset = ServiceType.objects.filter(is_active=True).order_by('name')
+    serializer_class = ServiceTypeSerializer
     permission_classes = [AllowAny]
-    queryset = ServiceRequestUpdate.objects.all().order_by('-created_at')
-    
-    def get_queryset(self):
-        """Return all updates with optional filters"""
-        queryset = ServiceRequestUpdate.objects.all()
-        
-        # Filter by service request if specified
-        service_request_id = self.request.query_params.get('service_request')
-        if service_request_id:
-            queryset = queryset.filter(service_request_id=service_request_id)
-        
-        # Filter by update type
-        update_type = self.request.query_params.get('update_type')
-        if update_type:
-            queryset = queryset.filter(update_type=update_type)
-        
-        return queryset.order_by('-created_at')
-
-
-class ServiceRequestAttachmentViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for service request attachments
-    Anyone can perform all operations
-    """
-    serializer_class = ServiceRequestAttachmentSerializer
-    permission_classes = [AllowAny]
-    queryset = ServiceRequestAttachment.objects.all().order_by('-created_at')
-    
-    def get_queryset(self):
-        """Return all attachments with optional filters"""
-        queryset = ServiceRequestAttachment.objects.all()
-        
-        # Filter by service request
-        service_request_id = self.request.query_params.get('service_request')
-        if service_request_id:
-            queryset = queryset.filter(service_request_id=service_request_id)
-        
-        # Filter by file type
-        file_type = self.request.query_params.get('file_type')
-        if file_type:
-            queryset = queryset.filter(file_type=file_type)
-        
-        return queryset.order_by('-created_at')
-    
-    def perform_create(self, serializer):
-        """Set uploaded_by when creating attachment"""
-        serializer.save(uploaded_by=self.request.user if self.request.user.is_authenticated else None)
