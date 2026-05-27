@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'mechanics',
     'authe',
     'payments',
+    # 'rolecontrol',
 ]
 
 # Custom user model

@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/', include('mechanics.urls')),  # Add this line
     path('api/', include('authe.urls')),  # Add this line
     path('api/',include('payments.urls')),
+    path('api/members/', include('authe.members_urls')),
 
 ]
 
