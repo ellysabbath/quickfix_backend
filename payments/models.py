@@ -1,169 +1,230 @@
 # payments/models.py
 
 from django.db import models
-from django.conf import settings  # Import settings instead of auth.User
 from django.utils import timezone
+from django.conf import settings
 import uuid
+import base64
 
-class PaymentMethod(models.TextChoices):
-    MPESA = 'mpesa', 'Lipa Na M-Pesa'
-    TIGO_PESA = 'tigo_pesa', 'Tigo Pesa'
-    AIRTEL_MONEY = 'airtel_money', 'Airtel Money'
-    HALO_PESA = 'halo_pesa', 'Halo Pesa'
-    MANUAL = 'manual', 'Manual Payment'
+# Import the CustomerServiceRequest from registration app
+from registration.models import CustomerServiceRequest
 
-class PaymentStatus(models.TextChoices):
-    PENDING = 'pending', 'Pending'
-    PROCESSING = 'processing', 'Processing'
-    COMPLETED = 'completed', 'Completed'
-    FAILED = 'failed', 'Failed'
-    CANCELLED = 'cancelled', 'Cancelled'
+# ============================================================================
+# SERVICE REQUEST MODEL - Using the existing model from registration
+# ============================================================================
 
-# class Transaction(models.Model):
-#     """Main transaction model for payments"""
-#     transaction_id = models.CharField(max_length=100, unique=True, editable=False)
+# We'll use the CustomerServiceRequest from registration app directly
+# No need to redefine ServiceRequest here
 
-#     # Fix: Use settings.AUTH_USER_MODEL instead of auth.User
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,  # Changed from 'auth.User'
-#         on_delete=models.CASCADE,
-#         related_name='transactions'
-#     )
+# ============================================================================
+# BANK DETAILS MODEL - Matches frontend BankDetails interface
+# ============================================================================
 
-#     booking_id = models.IntegerField(null=True, blank=True)
-#     service_request_id = models.IntegerField(null=True, blank=True)
-
-#     # Payment details
-#     amount = models.DecimalField(max_digits=10, decimal_places=2)
-#     payment_method = models.CharField(max_length=20, choices=PaymentMethod.choices)
-#     payment_status = models.CharField(max_length=20, choices=PaymentStatus.choices, default=PaymentStatus.PENDING)
-
-#     # Mobile money details
-#     phone_number = models.CharField(max_length=15, blank=True, null=True)
-#     provider_reference = models.CharField(max_length=100, blank=True, null=True)
-
-#     # Manual payment details
-#     bank_reference = models.CharField(max_length=100, blank=True, null=True)
-#     payment_proof = models.FileField(upload_to='payment_proofs/', blank=True, null=True)
-
-#     # Timestamps
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     completed_at = models.DateTimeField(blank=True, null=True)
-
-#     # Metadata
-#     notes = models.TextField(blank=True, null=True)
-#     ip_address = models.GenericIPAddressField(blank=True, null=True)
-
-#     class Meta:
-#         ordering = ['-created_at']
-#         verbose_name = 'Transaction'
-#         verbose_name_plural = 'Transactions'
-
-#     def save(self, *args, **kwargs):
-#         if not self.transaction_id:
-#             self.transaction_id = f"TXN-{uuid.uuid4().hex[:10].upper()}"
-#         super().save(*args, **kwargs)
-
-#     def __str__(self):
-#         return f"{self.transaction_id} - {self.user.username if hasattr(self.user, 'username') else str(self.user)} - {self.amount}"
+class BankDetails(models.Model):
+    """
+    Model for bank details - matches frontend BankDetails interface
+    """
+    bank_name = models.CharField(max_length=100, default='CRDB Bank PLC')
+    account_name = models.CharField(max_length=200, default='QuickFix Services')
+    account_number = models.CharField(max_length=50, default='01-1234567890')
+    branch = models.CharField(max_length=100, default='Kariakoo Branch')
+    swift_code = models.CharField(max_length=20, default='CORUTZTZ')
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = "Bank Details"
+        verbose_name_plural = "Bank Details"
+    
+    def __str__(self):
+        return f"{self.bank_name} - {self.account_name}"
 
 
+# ============================================================================
+# PAYMENT METHOD MODEL - Matches frontend PaymentMethod interface
+# ============================================================================
 
-class Transaction(models.Model):
-    """Main transaction model for payments"""
-    transaction_id = models.CharField(max_length=100, unique=True, editable=False)
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='transactions'
-    )
-
-    booking_id = models.IntegerField(null=True, blank=True)
-    service_request_id = models.IntegerField(null=True, blank=True)
-
-    # Payment details
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_method = models.CharField(max_length=20, choices=PaymentMethod.choices)
-    payment_status = models.CharField(max_length=20, choices=PaymentStatus.choices, default=PaymentStatus.PENDING)
-
-    # Mobile money details
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
-    provider_reference = models.CharField(max_length=100, blank=True, null=True)
-
-    # Manual payment details
-    bank_reference = models.CharField(max_length=100, blank=True, null=True)
-    payment_proof = models.FileField(upload_to='payment_proofs/', blank=True, null=True)
-
+class PaymentMethod(models.Model):
+    """
+    Model for payment methods - matches frontend PaymentMethod interface
+    """
+    METHOD_TYPES = [
+        ('mpesa', 'M-Pesa'),
+        ('tigo_pesa', 'Tigo Pesa'),
+        ('airtel_money', 'Airtel Money'),
+        ('halo_pesa', 'Halo Pesa'),
+        ('manual', 'Manual Payment'),
+    ]
+    
+    # Primary key is the method ID (e.g., 'mpesa', 'tigo_pesa')
+    id = models.CharField(max_length=20, primary_key=True)
+    name = models.CharField(max_length=100)
+    icon = models.CharField(max_length=50)
+    color = models.CharField(max_length=20, default='#4CAF50')
+    description = models.TextField()
+    api_method = models.CharField(max_length=50, default='mpesa')
+    is_active = models.BooleanField(default=True)
+    
+    # Transaction info as JSON - matches frontend transactionInfo
+    transaction_info = models.JSONField(default=dict)
+    
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    completed_at = models.DateTimeField(blank=True, null=True)
+    
+    class Meta:
+        verbose_name = "Payment Method"
+        verbose_name_plural = "Payment Methods"
+    
+    def __str__(self):
+        return self.name
 
-    # Metadata
-    notes = models.TextField(blank=True, null=True)
-    ip_address = models.GenericIPAddressField(blank=True, null=True)
 
+# ============================================================================
+# PAYMENT RECORD MODEL - References CustomerServiceRequest from registration
+# ============================================================================
+
+class PaymentRecord(models.Model):
+    """
+    Model for payment records - references CustomerServiceRequest from registration app
+    """
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('verified', 'Verified'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+    ]
+    
+    # ===== Payment Identification =====
+    id = models.AutoField(primary_key=True)
+    payment_id = models.CharField(max_length=50, unique=True, editable=False)
+    
+    # ===== Relations - Using CustomerServiceRequest from registration =====
+    service_request = models.ForeignKey(
+        CustomerServiceRequest,  # From registration.models
+        on_delete=models.CASCADE,
+        related_name='payments',
+        null=True,
+        blank=True
+    )
+    payment_method = models.CharField(max_length=20, default='mpesa')
+    
+    # ===== Sender Information (matches frontend) =====
+    sender_name = models.CharField(max_length=200)
+    sender_phone = models.CharField(max_length=20)
+    sender_email = models.EmailField(null=True, blank=True)
+    sender_account = models.CharField(max_length=50, null=True, blank=True)
+    
+    # ===== Receiver Information (matches frontend) =====
+    receiver_name = models.CharField(max_length=200)
+    receiver_phone = models.CharField(max_length=20)
+    receiver_account = models.CharField(max_length=50, null=True, blank=True)
+    
+    # ===== Payment Details =====
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    transaction_reference = models.CharField(max_length=100, null=True, blank=True)
+    transaction_id = models.CharField(max_length=100, null=True, blank=True)
+    
+    # ===== Screenshot (base64) =====
+    screenshot_base64 = models.TextField(null=True, blank=True)
+    screenshot_filename = models.CharField(max_length=255, null=True, blank=True)
+    screenshot_content_type = models.CharField(max_length=100, null=True, blank=True)
+    
+    # ===== Proof (for manual payments) =====
+    proof_uri = models.TextField(null=True, blank=True)
+    proof_filename = models.CharField(max_length=255, null=True, blank=True)
+    
+    # ===== Status =====
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    status_display = models.CharField(max_length=50, null=True, blank=True)
+    whatsapp_sent = models.BooleanField(default=False)
+    email_sent = models.BooleanField(default=False)
+    
+    # ===== Timestamps =====
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    confirmed_at = models.DateTimeField(null=True, blank=True)
+    verified_at = models.DateTimeField(null=True, blank=True)
+    
     class Meta:
         ordering = ['-created_at']
-        verbose_name = 'Transaction'
-        verbose_name_plural = 'Transactions'
-
-    def save(self, *args, **kwargs):
-        if not self.transaction_id:
-            self.transaction_id = f"TXN-{uuid.uuid4().hex[:10].upper()}"
-        super().save(*args, **kwargs)
-
-        # Update linked service request budget when payment is completed
-        if self.payment_status == PaymentStatus.COMPLETED and self.service_request_id:
-            try:
-                from your_app.models import CustomerServiceRequest  # Replace 'your_app' with actual app name
-                service_request = CustomerServiceRequest.objects.get(id=self.service_request_id)
-                if service_request.budget_maximum != self.amount:
-                    service_request.budget_maximum = self.amount
-                    service_request.save(update_fields=['budget_maximum'])
-            except Exception as e:
-                print(f"Error updating service request budget: {e}")
-
+        verbose_name = "Payment Record"
+        verbose_name_plural = "Payment Records"
+    
     def __str__(self):
-        return f"{self.transaction_id} - {self.user.username if hasattr(self.user, 'username') else str(self.user)} - {self.amount}"
+        return f"{self.payment_id} - {self.sender_name} - {self.status}"
+    
+    def save(self, *args, **kwargs):
+        if not self.payment_id:
+            self.payment_id = f"PAY-{timezone.now().strftime('%Y%m%d')}-{str(uuid.uuid4()).upper()[:8]}"
+        if not self.status_display:
+            self.status_display = dict(self.STATUS_CHOICES).get(self.status, self.status)
+        super().save(*args, **kwargs)
+    
+    def set_screenshot_from_base64(self, base64_string, filename=None, content_type='image/jpeg'):
+        """Set screenshot from base64 string"""
+        if base64_string.startswith('data:image'):
+            header, base64_data = base64_string.split(',', 1)
+            content_type = header.split(';')[0].replace('data:', '')
+            self.screenshot_content_type = content_type
+            self.screenshot_base64 = base64_data
+        else:
+            self.screenshot_base64 = base64_string
+            self.screenshot_content_type = content_type
+        
+        if filename:
+            self.screenshot_filename = filename
+        else:
+            self.screenshot_filename = f"screenshot_{int(timezone.now().timestamp())}.jpg"
+    
+    def get_screenshot_base64(self):
+        """Get full base64 data URL"""
+        if self.screenshot_base64:
+            content_type = self.screenshot_content_type or 'image/jpeg'
+            return f"data:{content_type};base64,{self.screenshot_base64}"
+        return None
+    
+    def has_screenshot(self):
+        """Check if screenshot exists"""
+        return bool(self.screenshot_base64)
 
 
+# ============================================================================
+# PAYMENT NOTIFICATION MODEL
+# ============================================================================
 
-
-
-class PaymentSession(models.Model):
-    """Track payment sessions for STK Push and external payments"""
-    session_id = models.CharField(max_length=100, unique=True)
-    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE, related_name='session')
-    checkout_request_id = models.CharField(max_length=100, blank=True, null=True)
-    merchant_request_id = models.CharField(max_length=100, blank=True, null=True)
-    result_code = models.IntegerField(blank=True, null=True)
-    result_desc = models.TextField(blank=True, null=True)
+class PaymentNotification(models.Model):
+    """
+    Model for payment notifications
+    """
+    NOTIFICATION_TYPES = [
+        ('payment_initiated', 'Payment Initiated'),
+        ('payment_confirmed', 'Payment Confirmed'),
+        ('payment_verified', 'Payment Verified'),
+        ('payment_completed', 'Payment Completed'),
+        ('payment_failed', 'Payment Failed'),
+        ('status_update', 'Status Update'),
+    ]
+    
+    payment_record = models.ForeignKey(
+        PaymentRecord,
+        on_delete=models.CASCADE,
+        related_name='notifications'
+    )
+    notification_type = models.CharField(max_length=20, choices=NOTIFICATION_TYPES)
+    recipient_email = models.EmailField()
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    email_sent = models.BooleanField(default=False)
+    sent_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()
-
-    def __str__(self):
-        return self.session_id
-
-
-class PaymentWebhook(models.Model):
-    """Store incoming payment webhooks from telcos"""
-    webhook_id = models.CharField(max_length=100, unique=True, editable=False)
-    transaction_id = models.CharField(max_length=100, blank=True, null=True)
-    payload = models.JSONField()
-    received_at = models.DateTimeField(auto_now_add=True)
-    processed = models.BooleanField(default=False)
-    processed_at = models.DateTimeField(blank=True, null=True)
-
+    
     class Meta:
-        ordering = ['-received_at']
-
-    def save(self, *args, **kwargs):
-        if not self.webhook_id:
-            self.webhook_id = f"WH-{uuid.uuid4().hex[:12].upper()}"
-        super().save(*args, **kwargs)
-
+        ordering = ['-created_at']
+        verbose_name = "Payment Notification"
+        verbose_name_plural = "Payment Notifications"
+    
     def __str__(self):
-        return f"{self.webhook_id} - Processed: {self.processed}"
+        return f"{self.payment_record.payment_id} - {self.notification_type}"

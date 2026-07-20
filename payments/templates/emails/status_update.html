@@ -1,0 +1,143 @@
+<!-- templates/emails/status_update.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            border: 1px solid #e2e8f0;
+        }
+        .status-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px solid #f59e0b;
+        }
+        .old-status {
+            color: #94a3b8;
+            text-decoration: line-through;
+        }
+        .new-status {
+            color: #f59e0b;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .arrow {
+            font-size: 30px;
+            margin: 10px 0;
+        }
+        .payment-details {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            font-weight: bold;
+            color: #64748b;
+        }
+        .value {
+            color: #0f172a;
+        }
+        .button {
+            display: inline-block;
+            background: #f59e0b;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background: #d97706;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Status Update 🔄</h1>
+        <p>Your payment status has been updated</p>
+    </div>
+    
+    <div class="content">
+        <p>Dear <strong>{{ sender_name }}</strong>,</p>
+        <p>The status of your payment for request <strong>{{ request_code }}</strong> has been updated.</p>
+        
+        <div class="status-box">
+            <div class="old-status">{{ old_status }}</div>
+            <div class="arrow">⬇️</div>
+            <div class="new-status">{{ new_status }}</div>
+        </div>
+        
+        <div class="payment-details">
+            <h3>Payment Summary</h3>
+            <div class="detail-row">
+                <span class="label">Payment ID:</span>
+                <span class="value">{{ payment_id }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Request Code:</span>
+                <span class="value">{{ request_code }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Amount:</span>
+                <span class="value">{{ amount }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Updated At:</span>
+                <span class="value">{{ updated_at }}</span>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="{{ dashboard_url }}" class="button">View Details</a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; {{ year }} {{ company_name }}. All rights reserved.</p>
+        <p>This is an automated message from {{ company_name }}.</p>
+    </div>
+</body>
+</html>

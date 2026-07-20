@@ -1,0 +1,180 @@
+<!-- templates/emails/payment_confirmed.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            border: 1px solid #e2e8f0;
+        }
+        .success-icon {
+            font-size: 48px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .payment-details {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            font-weight: bold;
+            color: #64748b;
+        }
+        .value {
+            color: #0f172a;
+        }
+        .amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #10b981;
+        }
+        .status-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background: #059669;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        .reference-box {
+            background: #f0fdf4;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #bbf7d0;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .info-box {
+            background: #f0fdf4;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Payment Confirmed! ✅</h1>
+        <p>Your payment has been confirmed successfully</p>
+    </div>
+    
+    <div class="content">
+        <div class="success-icon">🎉</div>
+        <p>Dear <strong>{{ sender_name }}</strong>,</p>
+        <p><strong>Congratulations!</strong> Your payment for request <strong>{{ request_code }}</strong> has been confirmed.</p>
+        
+        <div class="payment-details">
+            <h3>Payment Summary</h3>
+            <div class="detail-row">
+                <span class="label">Payment ID:</span>
+                <span class="value">{{ payment_id }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Request Code:</span>
+                <span class="value">{{ request_code }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Service:</span>
+                <span class="value">{{ service_name }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Amount:</span>
+                <span class="amount">{{ amount }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Payment Method:</span>
+                <span class="value">{{ payment_method }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Receiver:</span>
+                <span class="value">{{ receiver_name }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Confirmed At:</span>
+                <span class="value">{{ confirmed_at }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Status:</span>
+                <span class="status-badge">Confirmed</span>
+            </div>
+        </div>
+        
+        {% if reference != 'N/A' %}
+        <div class="reference-box">
+            <div class="label">📝 Transaction Reference</div>
+            <div class="value" style="font-size:18px; font-weight:bold; color:#065f46;">{{ reference }}</div>
+        </div>
+        {% endif %}
+        
+        <div class="info-box">
+            <p style="margin: 0; color: #065f46;">
+                <strong>✅ What's Next?</strong> {{ next_steps }}
+            </p>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="{{ dashboard_url }}" class="button">Track Your Request</a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; {{ year }} {{ company_name }}. All rights reserved.</p>
+        <p>This is an automated message from {{ company_name }}.</p>
+        <p>Need help? Contact us at {{ support_email }}</p>
+    </div>
+</body>
+</html>
