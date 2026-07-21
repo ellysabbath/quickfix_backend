@@ -1,3 +1,46 @@
 INFO 2025-12-13 19:52:17,504 autoreload Watching for file changes with StatReloader
 INFO 2025-12-13 19:52:33,044 autoreload Watching for file changes with StatReloader
 INFO 2025-12-13 19:54:14,943 autoreload C:\Users\elly\Desktop\app\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:04:21,628 autoreload 10952 15712 Watching for file changes with StatReloader
+INFO 2026-07-21 05:04:24,042 autoreload 10952 15712 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:04:25,153 autoreload 17332 13764 Watching for file changes with StatReloader
+INFO 2026-07-21 05:04:27,506 autoreload 17332 13764 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:04:28,823 autoreload 1968 19500 Watching for file changes with StatReloader
+INFO 2026-07-21 05:04:34,911 autoreload 1968 19500 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:04:36,214 autoreload 16192 20248 Watching for file changes with StatReloader
+INFO 2026-07-21 05:04:43,376 autoreload 16192 20248 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:04:44,420 autoreload 6604 11176 Watching for file changes with StatReloader
+INFO 2026-07-21 05:04:49,568 autoreload 6604 11176 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:04:51,219 autoreload 21284 18336 Watching for file changes with StatReloader
+INFO 2026-07-21 05:09:01,297 autoreload 21284 18336 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:09:24,671 autoreload 12236 13168 Watching for file changes with StatReloader
+INFO 2026-07-21 05:09:43,969 autoreload 12236 13168 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:09:45,662 autoreload 12748 15912 Watching for file changes with StatReloader
+INFO 2026-07-21 05:09:48,941 autoreload 12748 15912 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:09:50,301 autoreload 18728 4192 Watching for file changes with StatReloader
+INFO 2026-07-21 05:09:54,539 autoreload 18728 4192 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:09:56,303 autoreload 276 20916 Watching for file changes with StatReloader
+INFO 2026-07-21 05:15:22,298 log 276 12100 "GET /api/test/ HTTP/1.1" 200 431
+WARNING 2026-07-21 05:15:22,427 log 276 12100 "GET /favicon.ico HTTP/1.1" 404 3995
+INFO 2026-07-21 05:17:41,127 autoreload 276 20916 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:17:42,666 autoreload 6916 18940 Watching for file changes with StatReloader
+INFO 2026-07-21 05:18:14,534 autoreload 6916 18940 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:18:15,637 autoreload 17068 17664 Watching for file changes with StatReloader
+INFO 2026-07-21 05:21:42,914 autoreload 17068 17664 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:21:43,908 autoreload 16344 19728 Watching for file changes with StatReloader
+INFO 2026-07-21 05:21:47,083 autoreload 16344 19728 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:21:48,008 autoreload 17160 21324 Watching for file changes with StatReloader
+INFO 2026-07-21 05:21:49,813 autoreload 17160 21324 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:21:50,870 autoreload 18132 5596 Watching for file changes with StatReloader
+INFO 2026-07-21 05:21:52,871 autoreload 18132 5596 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:21:54,130 autoreload 11604 20652 Watching for file changes with StatReloader
+INFO 2026-07-21 05:21:55,926 autoreload 11604 20652 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:21:56,819 autoreload 21300 19632 Watching for file changes with StatReloader
+INFO 2026-07-21 05:21:58,761 autoreload 21300 19632 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:22:00,047 autoreload 18544 17844 Watching for file changes with StatReloader
+INFO 2026-07-21 05:23:34,361 autoreload 11176 15420 Watching for file changes with StatReloader
+INFO 2026-07-21 05:26:55,135 autoreload 11176 15420 D:\quickfix_backend\quickfix_backend\settings.py changed, reloading.
+INFO 2026-07-21 05:26:56,132 autoreload 15040 1292 Watching for file changes with StatReloader
+INFO 2026-07-21 05:27:38,791 autoreload 20740 20920 Watching for file changes with StatReloader
+INFO 2026-07-21 05:36:35,128 log 20740 16412 "OPTIONS /api/register/check-phone/ HTTP/1.1" 200 0
+INFO 2026-07-21 05:36:35,161 log 20740 16412 "POST /api/register/check-phone/ HTTP/1.1" 200 65
